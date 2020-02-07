@@ -1,4 +1,4 @@
-package com.laioffer.test;
+package com.laioffer.GasMaster;
 
 import org.junit.Test;
 

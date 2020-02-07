@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fitsSystemWindows="true">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="25dp"
+        android:paddingRight="25dp"
+        android:paddingTop="50dp">
+
+
+        <ImageView
+            android:layout_width="300dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="15dp"
+            android:src="@drawable/logo" />
+
+        <!--Email Label-->
+        <EditText
+            android:id="@+id/input_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:inputType="textEmailAddress"
+            android:hint="Email"
+            android:textSize="20dip"/>
+<!--            android:textColor="@color/white"/>-->
+
+        <!--Password Label-->
+        <EditText
+            android:id="@+id/input_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:inputType="textPassword"
+            android:hint="Password"
+            android:textSize="20dip"/>
+
+        <!--Login Button-->
+        <Button
+            android:id="@+id/btn_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:layout_marginBottom="25dp"
+            android:padding="15dp"
+            android:text="Login"
+            android:textSize="20dip"/>
+
+        <!--sign up-->
+        <TextView
+            android:id="@+id/link_signup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="25dp"
+            android:text="No account yet? Create one!"
+            android:gravity="center"
+            android:textSize="18dip"/>
+
+    </LinearLayout>
+
+</ScrollView>

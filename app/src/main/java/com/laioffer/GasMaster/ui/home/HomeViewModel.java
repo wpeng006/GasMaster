@@ -1,4 +1,4 @@
-package com.laioffer.test.ui.home;
+package com.laioffer.GasMaster.ui.home;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

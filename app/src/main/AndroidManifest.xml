@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.laioffer.test">
+    package="com.laioffer.GasMaster">
 
     <application
         android:allowBackup="true"
@@ -9,15 +9,24 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity
-            android:name=".MainActivity"
-            android:label="@string/app_name">
+            android:name="com.laioffer.GasMaster.MainActivity"
+            android:label="Gas Master">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="com.laioffer.GasMaster.LoginActivity" android:theme="@style/AppTheme.Dark">
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+        </activity>01
+        <activity android:name="com.laioffer.GasMaster.SignupActivity" android:theme="@style/AppTheme.Dark"/>
     </application>
 
 </manifest>

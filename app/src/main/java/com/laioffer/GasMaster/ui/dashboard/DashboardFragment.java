@@ -1,4 +1,4 @@
-package com.laioffer.test.ui.dashboard;
+package com.laioffer.GasMaster.ui.dashboard;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.laioffer.test.R;
+import com.laioffer.GasMaster.R;
 
 public class DashboardFragment extends Fragment {
 
