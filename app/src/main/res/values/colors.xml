@@ -4,7 +4,7 @@
     <color name="primary_dark">#E12929</color>
     <color name="primary_darker">#CC1D1D</color>
     <color name="accent">#FFFFFF</color>
-    <color name="colorPrimary">#C1C1C1</color>
+
     <color name="black">#000000</color>
     <color name="jet">#222222</color>
     <color name="oil">#333333</color>
@@ -13,17 +13,5 @@
     <color name="aluminum">#999999</color>
     <color name="base">#AAAAAA</color>
     <color name="iron">#CCCCCC</color>
-    <color name="white">#ffffff</color>
-    <color name="address">#E5E5E5</color>
-    <color name="followers">#666666</color>
-    <color name="headings">#666666</color>
-    <color name="solidCircle">#0D5D98</color>
-    <color name="circleBroder">#3797CF</color>
-    <color name="gradEnd">#666666</color>
-    <color name="gradStart">#E5E5E5</color>
-    <color name="followersBg">#666666</color>
-    <color name="followingBg">#8B4C39</color>
-    <color name="grey">#E5E5E5</color>
-    <color name="textview">#3797CF</color>
-    <color name="textview2">#FFFFFF</color>
+    <color name="white">#FFFFFF</color>
 </resources>
