@@ -1,30 +1,49 @@
 package com.laioffer.GasMaster;
 
 import android.os.Bundle;
-
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-
+import android.view.MenuItem;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import com.laioffer.GasMaster.GasFragment;
+import com.laioffer.GasMaster.PromotionFragment;
+import com.laioffer.GasMaster.UserFragment;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.laioffer.GasMaster.R;
 
 public class MainActivity extends AppCompatActivity {
-
+  BottomNavigationView bottomNavigation;
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
-    BottomNavigationView navView = findViewById(R.id.nav_view);
-    // Passing each menu ID as a set of Ids because each
-    // menu should be considered as top level destinations.
-    AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-      R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications)
-      .build();
-    NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-    NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-    NavigationUI.setupWithNavController(navView, navController);
+    bottomNavigation = findViewById(R.id.bottom_navigation);
+    bottomNavigation.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
+    openFragment(GasFragment.newInstance("", ""));
   }
-
+  public void openFragment(Fragment fragment) {
+    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+    transaction.replace(R.id.container, fragment);
+    transaction.addToBackStack(null);
+    transaction.commit();
+  }
+  BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener =
+          new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+              switch (item.getItemId()) {
+                case R.id.navigation_gas:
+                  openFragment(GasFragment.newInstance("", ""));
+                  return true;
+                case R.id.navigation_promotion:
+                  openFragment(PromotionFragment.newInstance("", ""));
+                  return true;
+                case R.id.navigation_user:
+                  openFragment(UserFragment.newInstance("", ""));
+                  return true;
+              }
+              return false;
+            }
+          };
 }
