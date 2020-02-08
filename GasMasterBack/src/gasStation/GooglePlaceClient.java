@@ -126,14 +126,14 @@ public class GooglePlaceClient
         return dist;
     }
     
-    public static void main(final String[] args) {
-        final GooglePlaceClient g = new GooglePlaceClient();
-        final List<GasStation> list = g.search(37.773972, -122.431297, 1000.0, "gas station");
-        System.out.println(list.get(0).lat);
-        System.out.println(list.get(0).lng);
-        for (int i = 0; i < list.size(); ++i) {
-            System.out.println(i);
-            System.out.println(distance(37.773972, -122.431297, list.get(i).lat, list.get(i).lng, "K"));
-        }
-    }
+//    public static void main(final String[] args) {
+//        final GooglePlaceClient g = new GooglePlaceClient();
+//        final List<GasStation> list = g.search(37.773972, -122.431297, 1000.0, "gas station");
+//        System.out.println(list.get(0).lat);
+//        System.out.println(list.get(0).lng);
+//        for (int i = 0; i < list.size(); ++i) {
+//            System.out.println(i);
+//            System.out.println(distance(37.773972, -122.431297, list.get(i).lat, list.get(i).lng, "K"));
+//        }
+//    }
 }
