@@ -6,5 +6,5 @@ public class Contants
     public static final String PATH = "/maps/api/place/textsearch/json";
     public static final String DEFAULT_KEYWORD = "gas station";
     public static final int DEFAULT_RADIUS = 5000;
-    public static final String API_KEY = "AIzaSyDcK4ajRr6ldUt5si02O7QOCU_-JQw9RBQ";
+    public static final String API_KEY = "AIzaSyC7MbepvrXbVQRlKsF9ECeUcTSq014v-lc";
 }
