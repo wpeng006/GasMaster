@@ -14,12 +14,19 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.laioffer.GasMaster.Model.User;
+import com.laioffer.GasMaster.Network.BackEndConnection;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
     private static final int REQUEST_SIGNUP = 0;
+    private BackEndConnection backEndConnection;
 
     @BindView(R.id.input_email) EditText _emailText;
     @BindView(R.id.input_password) EditText _passwordText;
@@ -51,6 +58,9 @@ public class LoginActivity extends AppCompatActivity {
                 overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
             }
         });
+
+        // initialize backendConnection
+        backEndConnection = BackEndConnection.getInstance();
     }
 
     private void login() {
@@ -73,7 +83,29 @@ public class LoginActivity extends AppCompatActivity {
         String password = _passwordText.getText().toString();
 
         // Todo: Authentication Implementation
+        /******************************* Being of sending and receiving login **********************************/
+        User loginUser = new User.UserBuilder()
+          .email(email)
+          .password(password)
+          .build();
 
+        Call<User> loginCall = backEndConnection.createService().login(loginUser);
+        loginCall.enqueue(new Callback <User>() {
+
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                Log.e(TAG, "Login Response" + response.body());
+
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                Log.e(TAG, "Login Failure: unable to get response" + t.getLocalizedMessage());
+
+            }
+        });
+
+        /******************************* End of sending and receiving ****************************************/
         new android.os.Handler().postDelayed(
                 new Runnable() {
                     public void run() {
