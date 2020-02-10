@@ -15,6 +15,7 @@ import java.net.HttpURLConnection;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import entity.GasStation;
+import entity.Contants;
 import java.util.List;
 
 public class GooglePlaceClient
@@ -26,7 +27,7 @@ public class GooglePlaceClient
         catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        final String query = String.format("query=%s&location=%s,%s&radius=%s&key=%s&", keyword, lat, lon, radius, "AIzaSyDcK4ajRr6ldUt5si02O7QOCU_-JQw9RBQ");
+        final String query = String.format("query=%s&location=%s,%s&radius=%s&key=%s&", keyword, lat, lon, radius, Contants.API_KEY);
         final String url = "https://maps.googleapis.com/maps/api/place/textsearch/json?" + query;
         final StringBuilder responseBody = new StringBuilder();
         try {
