@@ -26,6 +26,8 @@ import retrofit2.Response;
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
     private static final int REQUEST_SIGNUP = 0;
+
+    // hold onto a GasMaster back end connection
     private BackEndConnection backEndConnection;
 
     @BindView(R.id.input_email) EditText _emailText;
@@ -85,8 +87,9 @@ public class LoginActivity extends AppCompatActivity {
         // Todo: Authentication Implementation
         /******************************* Being of sending and receiving login **********************************/
         User loginUser = new User.UserBuilder()
-          .email(email)
+          //.email(email)
           .password(password)
+          .userId(email)
           .build();
 
         Call<User> loginCall = backEndConnection.createService().login(loginUser);
@@ -95,26 +98,31 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 Log.e(TAG, "Login Response" + response.body());
-
+                Log.e(TAG, "Login Response" + " " + response.body().getName());
+                if (response.isSuccessful()) {
+                    onLoginSuccess();
+                    progressDialog.dismiss();
+                }
             }
 
             @Override
             public void onFailure(Call<User> call, Throwable t) {
                 Log.e(TAG, "Login Failure: unable to get response" + t.getLocalizedMessage());
-
+                onLoginFailed();
+                progressDialog.dismiss();
             }
         });
 
         /******************************* End of sending and receiving ****************************************/
-        new android.os.Handler().postDelayed(
-                new Runnable() {
-                    public void run() {
-                        // On complete call either onLoginSuccess or onLoginFailed
-                        onLoginSuccess();
-                        // onLoginFailed();
-                        progressDialog.dismiss();
-                    }
-                }, 3000);
+//        new android.os.Handler().postDelayed(
+//                new Runnable() {
+//                    public void run() {
+//                        // On complete call either onLoginSuccess or onLoginFailed
+//                        onLoginSuccess();
+//                        // onLoginFailed();
+//                        progressDialog.dismiss();
+//                    }
+//                }, 3000);
     }
 
     // login success

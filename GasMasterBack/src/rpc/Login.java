@@ -40,7 +40,7 @@ public class Login extends HttpServlet {
 				String userId = session.getAttribute("user_id").toString();
 				obj.put("status", "OK").put("user_id", userId).put("name", connection.getFullname(userId));
 			}else {
-				obj.put("stats", "Invalid Session");
+				obj.put("stats", "Invalid Session GasMaster");
 				response.setStatus(403);
 			}
 			RpcHelper.writeJsonObject(response, obj);
