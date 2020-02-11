@@ -97,12 +97,20 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
-                Log.e(TAG, "Login Response" + response.body());
-                Log.e(TAG, "Login Response" + " " + response.body().getName());
+                if (response.body() == null) {
+                    Log.e(TAG, "Login Failure: unable to get response" + " "+ response.code());
+                    onLoginFailed();
+                }
                 if (response.isSuccessful()) {
+                    Log.e(TAG, "Login Response Successful" + " " + response.body().getName());
                     onLoginSuccess();
                     progressDialog.dismiss();
+                } else {
+                    Log.e(TAG, "Login Failure: unable to get response" + response.code());
+                    onLoginFailed();
                 }
+                progressDialog.dismiss();
+
             }
 
             @Override

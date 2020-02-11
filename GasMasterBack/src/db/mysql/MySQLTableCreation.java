@@ -40,4 +40,5 @@ public class MySQLTableCreation {
 			e.printStackTrace();
 		}
 	}
+	
 }

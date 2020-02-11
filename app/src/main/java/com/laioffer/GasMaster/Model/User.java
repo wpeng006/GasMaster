@@ -104,7 +104,7 @@ public class User {
       String[] nameArray = name.split(" ");
       this.name = name;
       this.firstName = nameArray[0];
-      this.lastName = nameArray.length > 1 ? nameArray[2] : "Unknown";
+      this.lastName = nameArray.length > 1 ? nameArray[1] : "Unknown";
       return this;
     }
 

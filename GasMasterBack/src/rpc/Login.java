@@ -34,6 +34,7 @@ public class Login extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		DBConnection connection = DBConnectionFactory.getConnection();
 		try {
+			System.out.println("received one login request");
 			HttpSession session = request.getSession(false);
 			JSONObject obj = new JSONObject();
 			if (session != null) {
@@ -57,6 +58,7 @@ public class Login extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		DBConnection connection = DBConnectionFactory.getConnection();
 		try {
+			System.out.println("received one login POST");
 			JSONObject input = RpcHelper.readJSONObject(request);
 			String userId = input.getString("user_id");
 			String password = input.getString("password");
