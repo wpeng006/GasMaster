@@ -25,10 +25,12 @@ import retrofit2.Response;
 public class SignupActivity extends AppCompatActivity {
     private static final String TAG = "SignupActivity";
 
+
     // hold on to a GasMaster connection
     private BackEndConnection backEndConnection;
+    @BindView(R.id.input_firstName) EditText _firstNameText;
+    @BindView(R.id.input_lastName) EditText _lastNameText;
 
-    @BindView(R.id.input_name) EditText _nameText;
     @BindView(R.id.input_car) EditText _carText;
     @BindView(R.id.input_email) EditText _emailText;
     @BindView(R.id.input_mobile) EditText _mobileText;
@@ -80,7 +82,8 @@ public class SignupActivity extends AppCompatActivity {
         progressDialog.setMessage("Creating Account...");
         progressDialog.show();
 
-        String name = _nameText.getText().toString();
+        String firstName = _firstNameText.getText().toString();
+        String lastName = _lastNameText.getText().toString();
         String car = _carText.getText().toString();
         String email = _emailText.getText().toString();
         String mobile = _mobileText.getText().toString();
@@ -153,27 +156,36 @@ public class SignupActivity extends AppCompatActivity {
     private boolean validate() {
         boolean valid = true;
 
-        String name = _nameText.getText().toString();
+        String firstName = _firstNameText.getText().toString();
+        String lastName = _lastNameText.getText().toString();
         String car = _carText.getText().toString();
         String email = _emailText.getText().toString();
         String mobile = _mobileText.getText().toString();
         String password = _passwordText.getText().toString();
         String reEnterPassword = _reEnterPasswordText.getText().toString();
 
-        // check name field
-        if (name.isEmpty() || name.length() < 3) {
-            _nameText.setError("Please enter a valid name!");
+        // check first name field
+        if (firstName.isEmpty() || firstName.length() < 3) {
+            _firstNameText.setError("Please enter a valid fist name!");
             valid = false;
         } else {
-            _nameText.setError(null);
+            _firstNameText.setError(null);
+        }
+
+        // check last name field
+        if (lastName.isEmpty() || lastName.length() < 3) {
+            _lastNameText.setError("Please enter a valid last name!");
+            valid = false;
+        } else {
+            _lastNameText.setError(null);
         }
 
         // check car model field
         if (car.isEmpty()) {
-            _nameText.setError("Please enter a valid car model!");
+            _carText.setError("Please enter a valid car model!");
             valid = false;
         } else {
-            _nameText.setError(null);
+            _carText.setError(null);
         }
 
         // check email field
