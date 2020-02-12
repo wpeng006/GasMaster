@@ -20,6 +20,7 @@ public class SignupActivity extends AppCompatActivity {
     private static final String TAG = "SignupActivity";
 
     @BindView(R.id.input_name) EditText _nameText;
+    @BindView(R.id.input_car) EditText _carText;
     @BindView(R.id.input_email) EditText _emailText;
     @BindView(R.id.input_mobile) EditText _mobileText;
     @BindView(R.id.input_password) EditText _passwordText;
@@ -68,6 +69,7 @@ public class SignupActivity extends AppCompatActivity {
         progressDialog.show();
 
         String name = _nameText.getText().toString();
+        String car = _carText.getText().toString();
         String email = _emailText.getText().toString();
         String mobile = _mobileText.getText().toString();
         String password = _passwordText.getText().toString();
@@ -109,14 +111,23 @@ public class SignupActivity extends AppCompatActivity {
         boolean valid = true;
 
         String name = _nameText.getText().toString();
+        String car = _carText.getText().toString();
         String email = _emailText.getText().toString();
         String mobile = _mobileText.getText().toString();
         String password = _passwordText.getText().toString();
         String reEnterPassword = _reEnterPasswordText.getText().toString();
 
-        // check email field
+        // check name field
         if (name.isEmpty() || name.length() < 3) {
             _nameText.setError("Please enter a valid name!");
+            valid = false;
+        } else {
+            _nameText.setError(null);
+        }
+
+        // check car model field
+        if (car.isEmpty()) {
+            _nameText.setError("Please enter a valid car model!");
             valid = false;
         } else {
             _nameText.setError(null);
@@ -158,7 +169,11 @@ public class SignupActivity extends AppCompatActivity {
         return valid;
     }
 
-
+    @Override
+    public void onBackPressed() {
+        // Disable going back to the MainActivity
+        moveTaskToBack(true);
+    }
 
 
 }

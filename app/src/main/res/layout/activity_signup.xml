@@ -15,7 +15,7 @@
 
         <ImageView
             android:layout_width="300dp"
-            android:layout_height="200dp"
+            android:layout_height="300dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="10dp"
             android:src="@drawable/logo" />
@@ -29,6 +29,17 @@
             android:layout_marginBottom="12dp"
             android:inputType="textPersonName"
             android:hint="Name"
+            android:textSize="20dip"/>
+
+        <!--Car model label-->
+        <EditText
+            android:id="@+id/input_car"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="12dp"
+            android:inputType="text"
+            android:hint="Car Model"
             android:textSize="20dip"/>
 
         <!--Phone number label-->
