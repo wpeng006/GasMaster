@@ -14,12 +14,21 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.laioffer.GasMaster.Model.User;
+import com.laioffer.GasMaster.Network.BackEndConnection;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
     private static final int REQUEST_SIGNUP = 0;
+
+    // hold onto a GasMaster back end connection
+    private BackEndConnection backEndConnection;
 
     @BindView(R.id.input_email) EditText _emailText;
     @BindView(R.id.input_password) EditText _passwordText;
@@ -51,6 +60,9 @@ public class LoginActivity extends AppCompatActivity {
                 overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
             }
         });
+
+        // initialize backendConnection
+        backEndConnection = BackEndConnection.getInstance();
     }
 
     private void login() {
@@ -74,15 +86,50 @@ public class LoginActivity extends AppCompatActivity {
 
         // Todo: Authentication Implementation
 
-        new android.os.Handler().postDelayed(
-                new Runnable() {
-                    public void run() {
-                        // On complete call either onLoginSuccess or onLoginFailed
-                        onLoginSuccess();
-                        // onLoginFailed();
-                        progressDialog.dismiss();
-                    }
-                }, 3000);
+        User loginUser = new User.UserBuilder()
+          //.email(email)
+          .password(password)
+          .userId(email)
+          .build();
+
+        Call<User> loginCall = backEndConnection.createService().login(loginUser);
+        loginCall.enqueue(new Callback<User>() {
+
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if (response.body() == null) {
+                    Log.e(TAG, "Login Failure: unable to get response" + " "+ response.code());
+                    onLoginFailed();
+                }
+                if (response.isSuccessful()) {
+                    Log.e(TAG, "Login Response Successful" + " " + response.body().getName());
+                    onLoginSuccess();
+                    progressDialog.dismiss();
+                } else {
+                    Log.e(TAG, "Login Failure: unable to get response" + response.code());
+                    onLoginFailed();
+                }
+                progressDialog.dismiss();
+
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                Log.e(TAG, "Login Failure: unable to get response" + t.getLocalizedMessage());
+                onLoginFailed();
+                progressDialog.dismiss();
+            }
+        });
+
+//        new android.os.Handler().postDelayed(
+//                new Runnable() {
+//                    public void run() {
+//                        // On complete call either onLoginSuccess or onLoginFailed
+//                        onLoginSuccess();
+//                        // onLoginFailed();
+//                        progressDialog.dismiss();
+//                    }
+//                }, 3000);
     }
 
     // login success
