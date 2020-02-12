@@ -20,15 +20,26 @@
             android:layout_marginBottom="10dp"
             android:src="@drawable/logo" />
 
-        <!--Name label-->
+        <!--First Name label-->
         <EditText
-            android:id="@+id/input_name"
+            android:id="@+id/input_firstName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:layout_marginBottom="12dp"
             android:inputType="textPersonName"
-            android:hint="Name"
+            android:hint="First Name"
+            android:textSize="20dip"/>
+
+        <!--Last Name label-->
+        <EditText
+            android:id="@+id/input_lastName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="12dp"
+            android:inputType="textPersonName"
+            android:hint="Last Name"
             android:textSize="20dip"/>
 
         <!--Car model label-->
