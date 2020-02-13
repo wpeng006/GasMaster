@@ -25,7 +25,6 @@ import retrofit2.Response;
 public class SignupActivity extends AppCompatActivity {
     private static final String TAG = "SignupActivity";
 
-
     // hold on to a GasMaster connection
     private BackEndConnection backEndConnection;
     @BindView(R.id.input_firstName) EditText _firstNameText;
@@ -93,7 +92,8 @@ public class SignupActivity extends AppCompatActivity {
         // Todo: Signup logic Implementation
         User user = new User.UserBuilder()
           .email(email)
-          .fullName(name)
+          .firstName(firstName)
+          .lastName(lastName)
           .phone(mobile)
           .password(password)
           .carModel(car)

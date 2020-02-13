@@ -89,7 +89,7 @@ public class LoginActivity extends AppCompatActivity {
         User loginUser = new User.UserBuilder()
           //.email(email)
           .password(password)
-          .userId(email)
+          .email(email)
           .build();
 
         Call<User> loginCall = backEndConnection.createService().login(loginUser);
