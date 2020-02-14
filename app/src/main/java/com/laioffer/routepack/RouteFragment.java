@@ -1,16 +1,25 @@
 package com.laioffer.routepack;
 
+
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -18,24 +27,20 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.maps.android.PolyUtil;
-
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-// HTTP
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.HttpUrl;
@@ -43,22 +48,25 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-// Utility
-import static com.laioffer.routepack.Utility.SERVICE_URL;
 import static com.laioffer.routepack.Utility.DEFAULT_KEYWORD;
 import static com.laioffer.routepack.Utility.DEFAULT_RADIUS;
 import static com.laioffer.routepack.Utility.LONG_DIS;
+import static com.laioffer.routepack.Utility.SERVICE_URL;
 
 
-public class RouteActivity extends AppCompatActivity
-        implements OnMapReadyCallback, OnMarkerClickListener {
+/**
+ * A simple {@link Fragment} subclass.
+ */
+public class RouteFragment extends Fragment implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
+    private MapView mapView;
+    private View view;
 
     private static final int COLOR_BLACK_ARGB = 0xff000000;
     private static final int POLYLINE_STROKE_WIDTH_PX = 20;
     private List<LatLng> navRoute;
 
     private String source = "USC";
-    private String dest = "San Francisco";
+    private String dest = "UCLA";
     String strUrl = UrlPart.getUrl(source, dest);
 
 
@@ -74,15 +82,36 @@ public class RouteActivity extends AppCompatActivity
     OkHttpClient client = new OkHttpClient();
     Route route = new Route();
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_route);
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
 
+    public RouteFragment() {
+        // Required empty public constructor
+    }
+
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+//        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+//                .findFragmentById(R.id.map);
+//        mapFrag.getMapAsync(this);
+
+        view = inflater.inflate(R.layout.fragment_route, container,
+                false);
+        return view;
+
+        //return inflater.inflate(R.layout.fragment_route, container, false);
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        mapView = (MapView) this.view.findViewById(R.id.event_map_view);
+        if (mapView != null) {
+            mapView.onCreate(null);
+            mapView.onResume();// needed to get the map to display immediately
+            mapView.getMapAsync(this);
+        }
     }
 
     @Override
@@ -146,7 +175,7 @@ public class RouteActivity extends AppCompatActivity
 
 
         // Jump to Google Map to navigate.
-        FloatingActionButton fab = findViewById(R.id.fab);
+        FloatingActionButton fab = view.findViewById(R.id.fab);
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -252,7 +281,7 @@ public class RouteActivity extends AppCompatActivity
                 try {
                     //3. get gas station list in the format of JSON Array
                     final JSONArray myResponse = new JSONArray(response.body().string());
-                    RouteActivity.this.runOnUiThread(new Runnable() {
+                    getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             //4. iterate JSON Array and get Information
@@ -383,31 +412,28 @@ public class RouteActivity extends AppCompatActivity
 
     private class DownloadTask2 extends AsyncTask<String, String, List<LatLng>> {
 
-    @Override
-    protected List<LatLng> doInBackground(String... strings) {
-      List<LatLng> points = new ArrayList<>();
-      try{
-        Log.d("Success", "Initiated request");
-        points = startRequest(strings[0]);
-        Log.d("Success", "Initiated request and received response");
-        Log.d("Success", "points has length " + points.size());
-        return points;
-      } catch (Exception e) {
-        Log.e("Fail", "Request to Download Failed");
-      }
-      return points;
-    }
+        @Override
+        protected List<LatLng> doInBackground(String... strings) {
+            List<LatLng> points = new ArrayList<>();
+            try {
+                Log.d("Success", "Initiated request");
+                points = startRequest(strings[0]);
+                Log.d("Success", "Initiated request and received response");
+                Log.d("Success", "points has length " + points.size());
+                return points;
+            } catch (Exception e) {
+                Log.e("Fail", "Request to Download Failed");
+            }
+            return points;
+        }
 
-    @Override
-    protected void onPostExecute(List<LatLng> latLngs) {
-      // super.onPostExecute(latLngs);
-       drawRoute(latLngs);
-       Log.d("Success", "route drawn on map");
+        @Override
+        protected void onPostExecute(List<LatLng> latLngs) {
+            // super.onPostExecute(latLngs);
+            drawRoute(latLngs);
+            Log.d("Success", "route drawn on map");
+        }
     }
-  }
 
 }
-
-
-
 
