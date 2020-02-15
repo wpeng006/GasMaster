@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
     bottomNavigation = findViewById(R.id.bottom_navigation);
     bottomNavigation.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
-    openFragment(GasFragment.newInstance("", ""));
+    openFragment(RouteFragment.newInstance("", ""));
   }
   public void openFragment(Fragment fragment) {
     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();

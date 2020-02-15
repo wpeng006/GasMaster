@@ -24,9 +24,9 @@ import retrofit2.Response;
 
 public class SignupActivity extends AppCompatActivity {
     private static final String TAG = "SignupActivity";
-
     // hold on to a GasMaster connection
     private BackEndConnection backEndConnection;
+
     @BindView(R.id.input_firstName) EditText _firstNameText;
     @BindView(R.id.input_lastName) EditText _lastNameText;
 
