@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
               switch (item.getItemId()) {
                 case R.id.navigation_gas:
-                  openFragment(GasFragment.newInstance("", ""));
+                  openFragment(RouteFragment.newInstance("", ""));
                   return true;
                 case R.id.navigation_promotion:
                   openFragment(PromotionFragment.newInstance("", ""));

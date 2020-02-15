@@ -86,50 +86,50 @@ public class LoginActivity extends AppCompatActivity {
 
         // Todo: Authentication Implementation
 
-        User loginUser = new User.UserBuilder()
-          //.email(email)
-          .password(password)
-          .email(email)
-          .build();
+//        User loginUser = new User.UserBuilder()
+//          //.email(email)
+//          .password(password)
+//          .email(email)
+//          .build();
+//
+//        Call<User> loginCall = backEndConnection.createService().login(loginUser);
+//        loginCall.enqueue(new Callback<User>() {
+//
+//            @Override
+//            public void onResponse(Call<User> call, Response<User> response) {
+//                if (response.body() == null) {
+//                    Log.e(TAG, "Login Failure: unable to get response" + " "+ response.code());
+//                    onLoginFailed();
+//                }
+//                if (response.isSuccessful()) {
+//                    Log.e(TAG, "Login Response Successful" + " " + response.body().getName());
+//                    onLoginSuccess();
+//                    progressDialog.dismiss();
+//                } else {
+//                    Log.e(TAG, "Login Failure: unable to get response" + response.code());
+//                    onLoginFailed();
+//                }
+//                progressDialog.dismiss();
+//
+//            }
+//
+//            @Override
+//            public void onFailure(Call<User> call, Throwable t) {
+//                Log.e(TAG, "Login Failure: unable to get response" + t.getLocalizedMessage());
+//                onLoginFailed();
+//                progressDialog.dismiss();
+//            }
+//        });
 
-        Call<User> loginCall = backEndConnection.createService().login(loginUser);
-        loginCall.enqueue(new Callback<User>() {
-
-            @Override
-            public void onResponse(Call<User> call, Response<User> response) {
-                if (response.body() == null) {
-                    Log.e(TAG, "Login Failure: unable to get response" + " "+ response.code());
-                    onLoginFailed();
-                }
-                if (response.isSuccessful()) {
-                    Log.e(TAG, "Login Response Successful" + " " + response.body().getName());
-                    onLoginSuccess();
-                    progressDialog.dismiss();
-                } else {
-                    Log.e(TAG, "Login Failure: unable to get response" + response.code());
-                    onLoginFailed();
-                }
-                progressDialog.dismiss();
-
-            }
-
-            @Override
-            public void onFailure(Call<User> call, Throwable t) {
-                Log.e(TAG, "Login Failure: unable to get response" + t.getLocalizedMessage());
-                onLoginFailed();
-                progressDialog.dismiss();
-            }
-        });
-
-//        new android.os.Handler().postDelayed(
-//                new Runnable() {
-//                    public void run() {
-//                        // On complete call either onLoginSuccess or onLoginFailed
-//                        onLoginSuccess();
-//                        // onLoginFailed();
-//                        progressDialog.dismiss();
-//                    }
-//                }, 3000);
+        new android.os.Handler().postDelayed(
+                new Runnable() {
+                    public void run() {
+                        // On complete call either onLoginSuccess or onLoginFailed
+                        onLoginSuccess();
+                        // onLoginFailed();
+                        progressDialog.dismiss();
+                    }
+                }, 3000);
     }
 
     // login success
