@@ -2,12 +2,14 @@ package com.laioffer.GasMaster;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.nfc.Tag;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -47,7 +49,7 @@ import static com.laioffer.GasMaster.Utility.DEFAULT_RADIUS;
 import static com.laioffer.GasMaster.Utility.LONG_DIS;
 import static com.laioffer.GasMaster.Utility.SERVICE_URL;
 
-public class RouteFragment extends Fragment implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
+public class RouteFragment extends Fragment implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, SearchView.OnQueryTextListener {
   private MapView mapView;
   private View view;
 
@@ -75,6 +77,8 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback, Googl
 
   OkHttpClient client = new OkHttpClient();
   Route route = new Route();
+
+  private static final String TAG = "Route Fragment";
 
 
   public RouteFragment() {
@@ -198,6 +202,28 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback, Googl
     });
 
   }
+
+  /**
+   * Called when the user submits the query. This could be due to a key press on the keyboard or due to pressing a submit button.
+   * The listener can override the standard behavior by returning true to indicate that it has handled the submit request.
+   * Otherwise return false to let the SearchView handle the submission by launching any associated intent.
+   * @param s
+   * @return boolean to indicate if it is handled by method. If false, SearchView will handle the
+   * submitting by launching associated intent
+   */
+  @Override
+  public boolean onQueryTextSubmit(String s) {
+    dest = s;
+    mMap.clear();
+    Log.e(TAG, "dest is now " + s);
+    return true;
+  }
+
+  @Override
+  public boolean onQueryTextChange(String s) {
+    return false;
+  }
+
 
   private class DownloadTask extends AsyncTask<String, Void, String> {
 

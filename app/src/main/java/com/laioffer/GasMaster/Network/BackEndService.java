@@ -7,9 +7,9 @@ import retrofit2.http.Body;
 import retrofit2.http.POST;
 
 public interface BackEndService {
-  @POST("Login")
+  @POST("login")
   Call<User> login(@Body User user);
 
-  @POST("Register")
+  @POST("register")
   Call<User> register(@Body User user);
 }
