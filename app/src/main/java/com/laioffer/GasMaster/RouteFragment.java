@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -49,7 +50,9 @@ import static com.laioffer.GasMaster.Utility.DEFAULT_RADIUS;
 import static com.laioffer.GasMaster.Utility.LONG_DIS;
 import static com.laioffer.GasMaster.Utility.SERVICE_URL;
 
-public class RouteFragment extends Fragment implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, SearchView.OnQueryTextListener {
+public class RouteFragment extends Fragment implements OnMapReadyCallback,
+        GoogleMap.OnMarkerClickListener,
+        SearchView.OnQueryTextListener {
   private MapView mapView;
   private View view;
 
@@ -131,14 +134,31 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback, Googl
   @Override
   public boolean onMarkerClick(final Marker marker) {
     // Check which Marker has been clicked and return positions.
-    LatLng mPos = marker.getPosition();
+    marker.showInfoWindow();
+
+    final LatLng mPos = marker.getPosition();
     Log.e("Marker Click", String.valueOf(mPos.latitude));
+
+    //dummy floating button for show route use
+    FloatingActionButton fab2 = view.findViewById(R.id.fab2);
+    fab2.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        showRoute(mPos);
+      }
+    });
+
+    return true;
+  }
+
+  public void showRoute(LatLng mPos) {
+    //return route with given gastion position
+    //moved out from onMarkerClick()
 
     List<LatLng> newRoute = new ArrayList<>();
     newRoute.add(sourcePoint);
     newRoute.add(mPos);
     newRoute.add(destPoint);
-
 
     if (longRoute) {
       mMap.clear();
@@ -157,8 +177,6 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback, Googl
       setRoute(newRoute);
       autoMoveCamera(newRoute);
     }
-
-    return true;
   }
 
   /**
@@ -175,6 +193,10 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback, Googl
 
     mMap = googleMap;
     Log.e("Task", "mMap created.");
+
+    CustomInfoWindowAdapter markerInfoWindowAdapter = new CustomInfoWindowAdapter(getActivity().getApplicationContext());
+    mMap.setInfoWindowAdapter(markerInfoWindowAdapter);
+
 
     // Download route data, sample points, and then
     // show gas stations for short distance or show area spots for long distance.
@@ -201,6 +223,7 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback, Googl
       }
     });
 
+
   }
 
   /**
@@ -223,6 +246,7 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback, Googl
   public boolean onQueryTextChange(String s) {
     return false;
   }
+
 
 
   private class DownloadTask extends AsyncTask<String, Void, String> {
