@@ -4,7 +4,7 @@ import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static com.laioffer.GasMaster.Config.GasMasterUrl.GAS_MASTER_URL;
+import static com.laioffer.GasMaster.Config.Config.GAS_MASTER_URL;
 
 public class BackEndConnection {
   private final String BASE_URL = GAS_MASTER_URL;

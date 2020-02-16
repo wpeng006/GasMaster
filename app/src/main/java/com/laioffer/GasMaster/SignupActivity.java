@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.laioffer.GasMaster.Config.Config;
 import com.laioffer.GasMaster.Model.User;
 import com.laioffer.GasMaster.Network.BackEndConnection;
 
@@ -148,7 +149,7 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     private void onSignupFailed() {
-        Toast.makeText(getBaseContext(), "Login Failed!", Toast.LENGTH_LONG).show();
+        Toast.makeText(getBaseContext(), "Sign up Failed!", Toast.LENGTH_LONG).show();
         _signupButton.setEnabled(true);
     }
 

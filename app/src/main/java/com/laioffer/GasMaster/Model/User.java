@@ -7,7 +7,7 @@ public class User {
   private String name;
 //  @SerializedName (value = "trip")
 //  private int trips;
-  @SerializedName(value = "email", alternate = "user_id")
+//  @SerializedName(value = "email", alternate = "user_id")
   private String email;
   @SerializedName(value = "password")
   private String password;
@@ -19,7 +19,7 @@ public class User {
   private String carModel;
   @SerializedName(value = "phone_number")
   private String phone;
-  @SerializedName(value = "user_id", alternate = "email")
+  @SerializedName(value = "user_id")
   private String userId;
 
   public void setStatus(String status) {
@@ -119,8 +119,7 @@ public class User {
 
     public UserBuilder email(String email) {
       this.email = email;
-      userId(email);
-      return this;
+      return this.userId(email);
     }
 
     public UserBuilder password(String password) {

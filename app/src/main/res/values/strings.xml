@@ -7,4 +7,5 @@
     <string name="nav_promotion">nav_promotion</string>
     <string name="nav_gas">nav_gas</string>
     <string name="nav_user">nav_user</string>
+    <string name="search_placeholder">Where to go</string>
 </resources>

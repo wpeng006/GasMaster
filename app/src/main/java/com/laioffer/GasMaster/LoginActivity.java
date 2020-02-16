@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.laioffer.GasMaster.Config.Config;
 import com.laioffer.GasMaster.Model.User;
 import com.laioffer.GasMaster.Network.BackEndConnection;
 
@@ -29,6 +30,8 @@ public class LoginActivity extends AppCompatActivity {
 
     // hold onto a GasMaster back end connection
     private BackEndConnection backEndConnection;
+    // hold an user object
+    User user;
 
     @BindView(R.id.input_email) EditText _emailText;
     @BindView(R.id.input_password) EditText _passwordText;
@@ -103,6 +106,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 if (response.isSuccessful()) {
                     Log.e(TAG, "Login Response Successful" + " " + response.body().getName());
+                    Config.currentUser = response.body();
                     onLoginSuccess();
                     progressDialog.dismiss();
                 } else {
@@ -120,7 +124,7 @@ public class LoginActivity extends AppCompatActivity {
                 progressDialog.dismiss();
             }
         });
-//
+
 //        new android.os.Handler().postDelayed(
 //                new Runnable() {
 //                    public void run() {
