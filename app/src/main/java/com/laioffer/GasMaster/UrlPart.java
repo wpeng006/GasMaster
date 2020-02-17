@@ -2,6 +2,8 @@ package com.laioffer.GasMaster;
 
 import android.util.Log;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,6 +21,12 @@ public class UrlPart {
    */
   public static String getUrl(String source, String dest) {
     String strUrl = DIRECTION_PREFIX + "origin=" + source + "&destination=" + dest + "&key=" + GOOGLE_MAP_API;
+    return strUrl;
+  }
+
+  public static String getUrl2(LatLng source, String dest) {
+    String strUrl = DIRECTION_PREFIX + "origin=" + source.latitude + "," + source.longitude
+            + "&destination=" + dest + "&key=" + GOOGLE_MAP_API;
     return strUrl;
   }
 

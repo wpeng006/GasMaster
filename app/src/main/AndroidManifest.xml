@@ -3,7 +3,7 @@
     package="com.laioffer.GasMaster">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    // permission for current device location.
+    <!-- permission for current device location. -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-feature android:name="android.hardware.location.gps" />

@@ -64,9 +64,10 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback,
   private static final int POLYLINE_STROKE_WIDTH_PX = 12;
   private List<LatLng> navRoute;
 
-  private String source = "USC";
+  private String source;
   private String dest = "UCLA";
-  String strUrl = UrlPart.getUrl(source, dest);
+  LatLng curPos; // Current position.
+  //String strUrl = UrlPart.getUrl(source, dest);
 
   private static final String ARG_PARAM1 = "param1";
   private static final String ARG_PARAM2 = "param2";
@@ -270,7 +271,7 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback,
     DownloadTask downloadTask = new DownloadTask();
 
     Log.e("Background Task", "Start to download route.");
-    downloadTask.execute(Utils.getDirectionUrl(source, dest));
+    downloadTask.execute(UrlPart.getUrl2(curPos, dest));
 
     // Click a marker and then show nearby stations or draw new route.
     mMap.setOnMarkerClickListener(this);
@@ -339,7 +340,7 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback,
   public void getNearbyStation(GoogleMap mMap) {
       locationTracker = new LocationTracker(getActivity());
       locationTracker.getLocation();
-      LatLng curPos = new LatLng(locationTracker.getLatitude(), locationTracker.getLongitude());
+      curPos = new LatLng(locationTracker.getLatitude(), locationTracker.getLongitude());
 
       CameraPosition cameraPosition = new CameraPosition.Builder()
               .target(curPos) // Sets the center of the map to Mountain View
