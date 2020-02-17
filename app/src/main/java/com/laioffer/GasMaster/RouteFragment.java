@@ -147,28 +147,12 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback,
   @Override
   public boolean onMarkerClick(final Marker marker) {
     // Check which Marker has been clicked and return positions.
-    marker.showInfoWindow();
+
 
     final LatLng mPos = marker.getPosition();
     Log.e("Marker Click", String.valueOf(mPos.latitude));
 
-    //dummy floating button for show route use
-    FloatingActionButton fab2 = view.findViewById(R.id.fab2);
-    fab2.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View view) {
-        showRoute(mPos);
-      }
-    });
-
-    return true;
-  }
-
-  public void showRoute(LatLng mPos) {
-    //return route with given gastion position
-    //moved out from onMarkerClick()
-
-    List<LatLng> newRoute = new ArrayList<>();
+    final List<LatLng> newRoute = new ArrayList<>();
     newRoute.add(sourcePoint);
     newRoute.add(mPos);
     newRoute.add(destPoint);
@@ -184,12 +168,31 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback,
       }
       longRoute = false;
     } else {
+      marker.showInfoWindow();
+    }
+
+    //dummy floating button for show route use
+    FloatingActionButton fab2 = view.findViewById(R.id.fab2);
+    fab2.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        showRoute(newRoute, mPos);
+      }
+    });
+
+    return true;
+  }
+
+  public void showRoute(List<LatLng> newRoute, LatLng mPos) {
+    //return route with given gastion position
+    //moved out from onMarkerClick()
+
+
       // Show new route.
       mMap.clear();
       mMap.addMarker(new MarkerOptions().position(mPos).icon(BitmapDescriptorFactory.fromResource((R.drawable.station))));
       setRoute(newRoute);
       autoMoveCamera(newRoute);
-    }
   }
 
   /**
@@ -343,7 +346,6 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback,
       locationTracker = new LocationTracker(getActivity());
       locationTracker.getLocation();
       curPos = new LatLng(locationTracker.getLatitude(), locationTracker.getLongitude());
-
       CameraPosition cameraPosition = new CameraPosition.Builder()
               .target(curPos) // Sets the center of the map to Mountain View
               .zoom(16)// Sets the zoom

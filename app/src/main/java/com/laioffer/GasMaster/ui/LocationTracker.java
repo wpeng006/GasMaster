@@ -47,20 +47,20 @@ public class LocationTracker implements LocationListener{
             } else {
                 // First get location from Network Provider
                 checkLocationPermission();
-                if (mIsNetworkEnabled) {
-                    if (locationManager != null) {
-                        locationManager.requestLocationUpdates(
-                                LocationManager.NETWORK_PROVIDER,
-                                MIN_TIME_BW_UPDATES,
-                                MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
-                        location = locationManager
-                                .getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-                        if (location != null) {
-                            latitude = location.getLatitude();
-                            longitude = location.getLongitude();
-                        }
-                    }
-                }
+//                if (mIsNetworkEnabled) {
+//                    if (locationManager != null) {
+//                        locationManager.requestLocationUpdates(
+//                                LocationManager.NETWORK_PROVIDER,
+//                                MIN_TIME_BW_UPDATES,
+//                                MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
+//                        location = locationManager
+//                                .getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+//                        if (location != null) {
+//                            latitude = location.getLatitude();
+//                            longitude = location.getLongitude();
+//                        }
+//                    }
+//                }
                 // if GPS Enabled get lat/long using GPS Services
                 if (mIsGPSEnabled) {
                     if (location == null) {
@@ -114,7 +114,8 @@ public class LocationTracker implements LocationListener{
      * @return longitude
      */
     public double getLongitude(){
-        if(location != null){longitude = location.getLongitude();
+        if(location != null){
+            longitude = location.getLongitude();
         }
         return longitude;
     }
