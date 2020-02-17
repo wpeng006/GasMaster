@@ -76,7 +76,7 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback,
 
   // geo-location of sampling points of a route
   private List<LatLng> points = new ArrayList<>();
-  private List<LatLng> source_dest = new ArrayList<>();
+  //private List<LatLng> source_dest = new ArrayList<>(); // Solve overlapping problems.
   private LatLng sourcePoint;
   private LatLng destPoint;
 
@@ -205,16 +205,16 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback,
     mMap.setInfoWindowAdapter(markerInfoWindowAdapter);
 
 
-    // Download route data, sample points, and then
-    // show gas stations for short distance or show area spots for long distance.
-    DownloadTask downloadTask = new DownloadTask();
-
-    Log.e("Background Task", "Start to download route.");
-    downloadTask.execute(strUrl);
-
-    // Click a marker and then show nearby stations or draw new route.
-    mMap.setOnMarkerClickListener(this);
-    Log.e("Task", "Listen on marker.");
+//    // Download route data, sample points, and then
+//    // show gas stations for short distance or show area spots for long distance.
+//    DownloadTask downloadTask = new DownloadTask();
+//
+//    Log.e("Background Task", "Start to download route.");
+//    downloadTask.execute(strUrl);
+//
+//    // Click a marker and then show nearby stations or draw new route.
+//    mMap.setOnMarkerClickListener(this);
+//    Log.e("Task", "Listen on marker.");
 
 
     // Jump to Google Map to navigate.
@@ -258,14 +258,14 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback,
     if (currentRoute != null) {
       currentRoute.remove();
     }
-//    DownloadTask downloadTask = new DownloadTask();
-//
-//    Log.e("Background Task", "Start to download route.");
-//    downloadTask.execute(Utils.getDirectionUrl(source, dest));
-//
-//    // Click a marker and then show nearby stations or draw new route.
-//    mMap.setOnMarkerClickListener(this);
-//    Log.e("Task", "Listen on marker.");
+    DownloadTask downloadTask = new DownloadTask();
+
+    Log.e("Background Task", "Start to download route.");
+    downloadTask.execute(Utils.getDirectionUrl(source, dest));
+
+    // Click a marker and then show nearby stations or draw new route.
+    mMap.setOnMarkerClickListener(this);
+    Log.e("Task", "Listen on marker.");
     return true;
   }
 
@@ -300,6 +300,7 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback,
     protected void onPostExecute(String result) {
 
       // Step 1: Sample points from original route.
+      points.clear(); // Solve overlapping problems.
       points = route.getRoute(result);
 
       // Step 3:
@@ -316,6 +317,7 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback,
 
       sourcePoint = points.get(0);
       destPoint = points.get(points.size() - 1);
+      List<LatLng> source_dest = new ArrayList<>(); // Solve overlapping problems.
       source_dest.add(sourcePoint);
       source_dest.add(destPoint);
       setRoute(source_dest);
