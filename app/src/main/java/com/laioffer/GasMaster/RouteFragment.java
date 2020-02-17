@@ -7,12 +7,15 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.SearchView;
+
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -51,13 +54,12 @@ import static com.laioffer.GasMaster.Utility.LONG_DIS;
 import static com.laioffer.GasMaster.Utility.SERVICE_URL;
 
 public class RouteFragment extends Fragment implements OnMapReadyCallback,
-        GoogleMap.OnMarkerClickListener,
-        SearchView.OnQueryTextListener {
+        GoogleMap.OnMarkerClickListener, SearchView.OnQueryTextListener {
   private MapView mapView;
   private View view;
 
   private static final int COLOR_BLACK_ARGB = 0xff000000;
-  private static final int POLYLINE_STROKE_WIDTH_PX = 20;
+  private static final int POLYLINE_STROKE_WIDTH_PX = 12;
   private List<LatLng> navRoute;
 
   private String source = "USC";
@@ -81,6 +83,10 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback,
   OkHttpClient client = new OkHttpClient();
   Route route = new Route();
 
+  // Polyline of drawing route
+  private Polyline currentRoute;
+
+  // TAG
   private static final String TAG = "Route Fragment";
 
 
@@ -103,6 +109,7 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback,
       mParam1 = getArguments().getString(ARG_PARAM1);
       mParam2 = getArguments().getString(ARG_PARAM2);
     }
+    setHasOptionsMenu(true);
   }
 
   @Override
@@ -222,32 +229,55 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback,
         startActivity(mapIntent);
       }
     });
+  }
 
-
+  @Override
+  public void onCreateOptionsMenu(Menu menu,MenuInflater inflater) {
+    // Do something that differs the Activity's menu here
+    SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+    searchView.setOnQueryTextListener(this);
+    super.onCreateOptionsMenu(menu, inflater);
   }
 
   /**
-   * Called when the user submits the query. This could be due to a key press on the keyboard or due to pressing a submit button.
-   * The listener can override the standard behavior by returning true to indicate that it has handled the submit request.
-   * Otherwise return false to let the SearchView handle the submission by launching any associated intent.
-   * @param s
-   * @return boolean to indicate if it is handled by method. If false, SearchView will handle the
-   * submitting by launching associated intent
+   * Called when the user submits the query. This could be due to a key press on the
+   * keyboard or due to pressing a submit button.
+   * The listener can override the standard behavior by returning true
+   * to indicate that it has handled the submit request. Otherwise return false to
+   * let the SearchView handle the submission by launching any associated intent.
+   *
+   * @param query the query text that is to be submitted
+   * @return true if the query has been handled by the listener, false to let the
+   * SearchView perform the default action.
    */
   @Override
-  public boolean onQueryTextSubmit(String s) {
-    dest = s;
+  public boolean onQueryTextSubmit(String query) {
+    Log.e("Search View", "Received a query from search view");
+    dest = query;
     mMap.clear();
-    Log.e(TAG, "dest is now " + s);
+    currentRoute.remove();
+//    DownloadTask downloadTask = new DownloadTask();
+//
+//    Log.e("Background Task", "Start to download route.");
+//    downloadTask.execute(Utils.getDirectionUrl(source, dest));
+//
+//    // Click a marker and then show nearby stations or draw new route.
+//    mMap.setOnMarkerClickListener(this);
+//    Log.e("Task", "Listen on marker.");
     return true;
   }
 
+  /**
+   * Called when the query text is changed by the user.
+   *
+   * @param newText the new content of the query text field.
+   * @return false if the SearchView should perform the default action of showing any
+   * suggestions if available, true if the action was handled by the listener.
+   */
   @Override
-  public boolean onQueryTextChange(String s) {
+  public boolean onQueryTextChange(String newText) {
     return false;
   }
-
-
 
   private class DownloadTask extends AsyncTask<String, Void, String> {
 
@@ -387,6 +417,7 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback,
     PolylineOptions options = new PolylineOptions().clickable(false);
     options.addAll(input);
     Polyline polyline = mMap.addPolyline(options);
+    currentRoute = polyline;
     polyline.setColor(COLOR_BLACK_ARGB);
     polyline.setWidth(POLYLINE_STROKE_WIDTH_PX);
     Log.d("Success", "drawRoute executed");

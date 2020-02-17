@@ -19,6 +19,21 @@ public class Utils {
   public static final String MAP_URL = "https://www.google.com/maps/dir/?api=1";
 
 
+  static String getDirectionUrl(String origin, String destination) {
+
+    StringBuilder urlBuilder = new StringBuilder()
+      .append(BASE_URL)
+      .append(DIRECTION_URL)
+      .append("?")
+      .append("origin=")
+      .append(origin)
+      .append("&")
+      .append("destination=")
+      .append(destination);
+    urlBuilder.append("&key=").append(API_KEY);
+    return urlBuilder.toString();
+  }
+
   static String getDirectionUrl(LatLng origin, LatLng destination, List<LatLng> waypoints) {
 
     StringBuilder urlBuilder = new StringBuilder()

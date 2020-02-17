@@ -21,6 +21,10 @@ public class User {
   private String phone;
   @SerializedName(value = "user_id")
   private String userId;
+  @SerializedName(value = "trips")
+  private String trips;
+  @SerializedName(value = "promotions")
+  private String promotions;
 
   public void setStatus(String status) {
     this.status = status;
@@ -81,6 +85,14 @@ public class User {
 
   public String getStatus() {
     return status;
+  }
+
+  public String getTrips() {
+    return trips;
+  }
+
+  public String getPromotions() {
+    return promotions;
   }
 
   public static class UserBuilder {

@@ -22,6 +22,13 @@ public class UserFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private User usr = new User.UserBuilder()
+      .email("unknown@gmail.com")
+      .firstName("Joseph")
+      .fullName("Joestar")
+      .build();
+
+
 
     @BindView(R.id.btn_logout)
     Button _logoutButton;
