@@ -19,6 +19,34 @@ public class Utils {
   public static final String MAP_URL = "https://www.google.com/maps/dir/?api=1";
 
 
+  static String replaceSpaceWithPlus(String s) {
+    if (s == null) {
+      return "";
+    }
+    char[] array = s.toCharArray();
+    for (int i = 0; i < array.length; i++) {
+      if (array[i] == ' ') {
+        array[i] = '+';
+      }
+    }
+    return new String(array);
+  }
+
+  static String getDirectionUrl(LatLng origin, String destination) {
+
+    StringBuilder urlBuilder = new StringBuilder()
+      .append(BASE_URL)
+      .append(DIRECTION_URL)
+      .append("?")
+      .append("origin=")
+      .append(origin.latitude).append(',').append(origin.longitude)
+      .append("&")
+      .append("destination=")
+      .append(destination);
+    urlBuilder.append("&key=").append(API_KEY);
+    return urlBuilder.toString();
+  }
+
   static String getDirectionUrl(String origin, String destination) {
 
     StringBuilder urlBuilder = new StringBuilder()

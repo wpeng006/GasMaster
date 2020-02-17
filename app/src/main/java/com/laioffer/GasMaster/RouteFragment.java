@@ -272,6 +272,8 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback,
 
     Log.e("Background Task", "Start to download route.");
     downloadTask.execute(UrlPart.getUrl2(curPos, dest));
+    Log.e("Direction Url", UrlPart.getUrl2(curPos, dest));
+    Log.e("Direction Url", Utils.getDirectionUrl(curPos, Utils.replaceSpaceWithPlus(dest)));
 
     // Click a marker and then show nearby stations or draw new route.
     mMap.setOnMarkerClickListener(this);
