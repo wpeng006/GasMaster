@@ -23,6 +23,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
@@ -31,6 +32,7 @@ import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.maps.android.PolyUtil;
+import com.laioffer.GasMaster.ui.LocationTracker;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -79,6 +81,9 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback,
   //private List<LatLng> source_dest = new ArrayList<>(); // Solve overlapping problems.
   private LatLng sourcePoint;
   private LatLng destPoint;
+
+  // Show current position on map.
+  private LocationTracker locationTracker;
 
   OkHttpClient client = new OkHttpClient();
   Route route = new Route();
@@ -216,6 +221,10 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback,
 //    mMap.setOnMarkerClickListener(this);
 //    Log.e("Task", "Listen on marker.");
 
+    // Show device location and nearby stations within 5km on map.
+    getNearbyStation(mMap);
+
+
 
     // Jump to Google Map to navigate.
     FloatingActionButton fab = view.findViewById(R.id.fab);
@@ -324,6 +333,35 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback,
       autoMoveCamera(source_dest);
 
     }
+  }
+
+  /********************* Get Nearby Gas Station **************************/
+  public void getNearbyStation(GoogleMap mMap) {
+      locationTracker = new LocationTracker(getActivity());
+      locationTracker.getLocation();
+      LatLng curPos = new LatLng(locationTracker.getLatitude(), locationTracker.getLongitude());
+
+      CameraPosition cameraPosition = new CameraPosition.Builder()
+              .target(curPos) // Sets the center of the map to Mountain View
+              .zoom(16)// Sets the zoom
+              .bearing(90) // Sets the orientation of the camera to east
+              .tilt(30) // Sets the tilt of the camera to 30 degrees
+              .build(); // Creates a CameraPosition from the builder
+      mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+      MarkerOptions marker = new MarkerOptions().position(curPos).
+              title("Current Location");
+      // Changing marker icon
+      marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.boy));
+      // adding marker
+      mMap.addMarker(marker);
+
+      // Show nearby gas stations in 1km.
+      try {
+          getGasStation(mMap, curPos, 10000);
+          Log.e("Task", "Show nearby stations.");
+      } catch (IOException e) {
+          e.printStackTrace();
+      }
   }
 
   /********************* Get Gas Station **************************/
