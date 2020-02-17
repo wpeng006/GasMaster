@@ -255,7 +255,9 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback,
     Log.e("Search View", "Received a query from search view");
     dest = query;
     mMap.clear();
-    currentRoute.remove();
+    if (currentRoute != null) {
+      currentRoute.remove();
+    }
 //    DownloadTask downloadTask = new DownloadTask();
 //
 //    Log.e("Background Task", "Start to download route.");
