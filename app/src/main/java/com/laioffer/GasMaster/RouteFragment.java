@@ -341,7 +341,6 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback,
       locationTracker = new LocationTracker(getActivity());
       locationTracker.getLocation();
       curPos = new LatLng(locationTracker.getLatitude(), locationTracker.getLongitude());
-
       CameraPosition cameraPosition = new CameraPosition.Builder()
               .target(curPos) // Sets the center of the map to Mountain View
               .zoom(16)// Sets the zoom
