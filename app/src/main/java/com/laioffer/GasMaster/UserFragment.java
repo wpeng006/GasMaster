@@ -62,8 +62,16 @@ public class UserFragment extends Fragment {
 
         View view =  inflater.inflate(R.layout.fragment_user, container, false);
         // Todo: Demo how to access usr object and set name
-        TextView name = (TextView) view.findViewById(R.id.name);
+
+        TextView name = (TextView) view.findViewById(R.id.user_name);
+        TextView email = (TextView) view.findViewById(R.id.user_email);
+        TextView trips = (TextView) view.findViewById(R.id.user_trip);
+        TextView promotion = (TextView) view.findViewById(R.id.user_promotion);
+
         name.setText(usr.getName());
+        email.setText(usr.getEmail());
+        trips.setText(usr.getTrip());
+        promotion.setText(usr.getPromotion());
         // Todo: End of demo
         Button btnLogout = view.findViewById(R.id.btn_logout);
         btnLogout.setOnClickListener(new View.OnClickListener() {
