@@ -1,6 +1,9 @@
 package com.laioffer.GasMaster;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.nfc.Tag;
 import android.os.AsyncTask;
@@ -469,10 +472,22 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback,
   }
 
   public Marker setGasMarker(GasStation gasStation, GoogleMap googleMap){
+
+    //resize custom marker
+    int height = 100;
+    int width = 100;
+    BitmapDrawable bitmapdraw=(BitmapDrawable)getResources().getDrawable(R.drawable.gas_station_color);
+    Bitmap b=bitmapdraw.getBitmap();
+    Bitmap smallMarker = Bitmap.createScaledBitmap(b, width, height, false);
+
+
     Marker m = googleMap.addMarker(new MarkerOptions().position(new LatLng(gasStation.lat, gasStation.lng))
-      .title(gasStation.name).snippet(String.valueOf(gasStation.rating)));
+            .title(gasStation.name)
+            .snippet(String.valueOf(gasStation.rating))
+            .icon(BitmapDescriptorFactory.fromBitmap(smallMarker)));
     return m;
   }
+
 
   /********************* Draw Route **************************/
   public void drawRoute(List<LatLng> input) {
