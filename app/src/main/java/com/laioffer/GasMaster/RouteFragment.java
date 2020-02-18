@@ -76,6 +76,7 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback,
 
   private GoogleMap mMap;
   private boolean longRoute = false;
+  private boolean toNearbyStation = true;
 
   // geo-location of sampling points of a route
   private List<LatLng> points = new ArrayList<>();
@@ -150,12 +151,20 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback,
 
 
     final LatLng mPos = marker.getPosition();
-    Log.e("Marker Click", String.valueOf(mPos.latitude));
+    Log.i("Task: Marker Click", String.valueOf(mPos.latitude));
 
     final List<LatLng> newRoute = new ArrayList<>();
-    newRoute.add(sourcePoint);
-    newRoute.add(mPos);
-    newRoute.add(destPoint);
+    if (toNearbyStation) {
+      newRoute.add(curPos);
+      newRoute.add(mPos);
+      Log.i("Task", "newRoute starts from longitude:" + newRoute.get(0).longitude);
+
+    } else {
+      newRoute.add(sourcePoint);
+      newRoute.add(mPos);
+      newRoute.add(destPoint);
+    }
+
 
     if (longRoute) {
       mMap.clear();
@@ -176,6 +185,7 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback,
     fab2.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
+        Log.i("Task", "Start to draw route.");
         showRoute(newRoute, mPos);
       }
     });
@@ -209,6 +219,9 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback,
 
     mMap = googleMap;
     Log.e("Task", "mMap created.");
+
+    mMap.setOnMarkerClickListener(this);
+    Log.e("Task", "Listen on marker.");
 
     CustomInfoWindowAdapter markerInfoWindowAdapter = new CustomInfoWindowAdapter(getActivity().getApplicationContext());
     mMap.setInfoWindowAdapter(markerInfoWindowAdapter);
@@ -267,6 +280,7 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback,
   public boolean onQueryTextSubmit(String query) {
     Log.e("Search View", "Received a query from search view");
     dest = query;
+    toNearbyStation = false;
     mMap.clear();
     if (currentRoute != null) {
       currentRoute.remove();
