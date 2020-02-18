@@ -434,6 +434,7 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback,
             @Override
             public void run() {
               //4. iterate JSON Array and get Information
+              List<LatLng> gasList = new ArrayList<>();
               for (int i = 0; i < myResponse.length(); i++) {
                 try {
                   JSONObject entry = myResponse.getJSONObject(i);
@@ -446,13 +447,15 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback,
                   builder.setRating(entry.getDouble("rating"));
                   GasStation gasStation = builder.build();
                   list.add(gasStation);
-                  setGasMarker(gasStation, googleMap);
+                  Marker m = setGasMarker(gasStation, googleMap);
+                  gasList.add(m.getPosition());
                   Log.i(Integer.toString(i), gasStation.name);
                 } catch (JSONException e) {
                   e.printStackTrace();
                 }
 
               }
+              autoMoveCamera(gasList);
             }
           });
 
@@ -465,9 +468,10 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback,
     });
   }
 
-  public void setGasMarker(GasStation gasStation, GoogleMap googleMap){
-    googleMap.addMarker(new MarkerOptions().position(new LatLng(gasStation.lat, gasStation.lng))
+  public Marker setGasMarker(GasStation gasStation, GoogleMap googleMap){
+    Marker m = googleMap.addMarker(new MarkerOptions().position(new LatLng(gasStation.lat, gasStation.lng))
       .title(gasStation.name).snippet(String.valueOf(gasStation.rating)));
+    return m;
   }
 
   /********************* Draw Route **************************/
