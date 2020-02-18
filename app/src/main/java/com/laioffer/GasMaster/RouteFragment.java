@@ -202,7 +202,6 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback,
       mMap.clear();
       mMap.addMarker(new MarkerOptions().position(mPos).icon(BitmapDescriptorFactory.fromResource((R.drawable.station))));
       setRoute(newRoute);
-      autoMoveCamera(newRoute);
   }
 
   /**
@@ -348,7 +347,6 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback,
       source_dest.add(sourcePoint);
       source_dest.add(destPoint);
       setRoute(source_dest);
-      autoMoveCamera(source_dest);
 
     }
   }
@@ -455,7 +453,9 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback,
                 }
 
               }
-              autoMoveCamera(gasList);
+              if (toNearbyStation) {
+                autoMoveCamera(gasList);
+              }
             }
           });
 
@@ -523,7 +523,7 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback,
     LatLngBounds bounds = boundBuilder.build();
     int width = getResources().getDisplayMetrics().widthPixels;
     int height = getResources().getDisplayMetrics().heightPixels;
-    int padding = 100;
+    int padding = 300;
     mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, width, height, padding));
   }
 
@@ -585,6 +585,7 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback,
     protected void onPostExecute(List<LatLng> latLngs) {
       // super.onPostExecute(latLngs);
       drawRoute(latLngs);
+      autoMoveCamera(latLngs); // Move camera to an appropriate view.
       Log.d("Success", "route drawn on map");
     }
   }
