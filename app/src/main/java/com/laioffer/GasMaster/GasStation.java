@@ -9,75 +9,82 @@ public class GasStation {
     public double lng;
     public String address;
     public double rating;
+    public boolean isOpen;
 
 
-    public GasStation(String name, double lat, double lng, String address, double rating) {
+    public GasStation(final String name, final double lat, final double lng, final String address, final double rating, final boolean isOpen) {
         this.name = name;
         this.lat = lat;
         this.lng = lng;
         this.address = address;
         this.rating = rating;
+        this.isOpen = isOpen;
+
     }
 
-    public GasStation(GasStationBuilder gasStationBuilder) {
+    public GasStation(final GasStation.GasStationBuilder gasStationBuilder) {
         this.name = gasStationBuilder.name;
         this.lat = gasStationBuilder.lat;
         this.lng = gasStationBuilder.lng;
         this.address = gasStationBuilder.address;
         this.rating = gasStationBuilder.rating;
+        this.isOpen = gasStationBuilder.isOpen;
     }
 
 
     public JSONObject toJSONObject() {
-        JSONObject obj = new JSONObject();
+        final JSONObject obj = new JSONObject();
         try {
-            obj.put("name", name);
-            obj.put("lat", lat);
-            obj.put("lng", lng);
-            obj.put("address", address);
-            obj.put("rating", rating);
+            obj.put("name", (Object)this.name);
+            obj.put("rating", this.rating);
+            obj.put("lat", this.lat);
+            obj.put("lng", this.lng);
+            obj.put("address", (Object)this.address);
+            obj.put("isOpen", this.isOpen);
 
-        } catch (JSONException e) {
+        }
+        catch (JSONException e) {
             e.printStackTrace();
         }
         return obj;
     }
 
-    //we want to new item but dont want to write so many constructors, so we use setters
-    //at same time we dont want to change variables in item so we dont put setters in item
-    //that;s why we use itemBuilder
-    public static class GasStationBuilder {//must put static, otherwise need to new Item before using ItemBuilder
+
+    public static class GasStationBuilder
+    {
         public String name;
         public double lat;
         public double lng;
         public String address;
         public double rating;
+        public boolean isOpen;
 
-        public GasStationBuilder() {}
-
-        public void setName(String name) {
+        public void setName(final String name) {
             this.name = name;
         }
-        public void setLat(double lat) {
+
+        public void setLat(final double lat) {
             this.lat = lat;
         }
-        public void setLng(double lng) {
+
+        public void setLng(final double lng) {
             this.lng = lng;
         }
-        public void setAddress(String address) {
+
+        public void setAddress(final String address) {
             this.address = address;
         }
 
-        public void setRating(double rating) {
+        public void setRating(final double rating) {
             this.rating = rating;
+        }
+
+        public void setIsOpen(final boolean isOpen) {
+            this.isOpen = isOpen;
         }
 
         public GasStation build() {
             return new GasStation(this);
         }
     }
-
-    //why not put ItemBuilder as a separate class??
-    //Item item = new Item(builder); do not like to use. when Item constructor is private, this can be avoided
-    //Item item = builder.build();
 }

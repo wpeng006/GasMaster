@@ -446,6 +446,7 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback,
                   builder.setLng(entry.getDouble("lng"));
                   builder.setName(entry.getString("name"));
                   builder.setRating(entry.getDouble("rating"));
+                  builder.setIsOpen(entry.getBoolean("isOpen"));
                   GasStation gasStation = builder.build();
                   list.add(gasStation);
                   Marker m = setGasMarker(gasStation, googleMap);
@@ -485,6 +486,7 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback,
             .title(gasStation.name)
             .snippet(String.valueOf(gasStation.rating))
             .icon(BitmapDescriptorFactory.fromBitmap(smallMarker)));
+    m.setTag(gasStation);
     return m;
   }
 
