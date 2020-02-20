@@ -1,6 +1,9 @@
 package com.laioffer.GasMaster;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.nfc.Tag;
 import android.os.AsyncTask;
@@ -202,7 +205,6 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback,
       mMap.clear();
       mMap.addMarker(new MarkerOptions().position(mPos).icon(BitmapDescriptorFactory.fromResource((R.drawable.station))));
       setRoute(newRoute);
-      autoMoveCamera(newRoute);
   }
 
   /**
@@ -350,7 +352,6 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback,
       source_dest.add(sourcePoint);
       source_dest.add(destPoint);
       setRoute(source_dest);
-      autoMoveCamera(source_dest);
 
     }
   }
@@ -436,6 +437,7 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback,
             @Override
             public void run() {
               //4. iterate JSON Array and get Information
+              List<LatLng> gasList = new ArrayList<>();
               for (int i = 0; i < myResponse.length(); i++) {
                 try {
                   JSONObject entry = myResponse.getJSONObject(i);
@@ -446,14 +448,19 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback,
                   builder.setLng(entry.getDouble("lng"));
                   builder.setName(entry.getString("name"));
                   builder.setRating(entry.getDouble("rating"));
+                  builder.setIsOpen(entry.getBoolean("isOpen"));
                   GasStation gasStation = builder.build();
                   list.add(gasStation);
-                  setGasMarker(gasStation, googleMap);
+                  Marker m = setGasMarker(gasStation, googleMap);
+                  gasList.add(m.getPosition());
                   Log.i(Integer.toString(i), gasStation.name);
                 } catch (JSONException e) {
                   e.printStackTrace();
                 }
 
+              }
+              if (toNearbyStation) {
+                autoMoveCamera(gasList);
               }
             }
           });
@@ -467,10 +474,24 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback,
     });
   }
 
-  public void setGasMarker(GasStation gasStation, GoogleMap googleMap){
-    googleMap.addMarker(new MarkerOptions().position(new LatLng(gasStation.lat, gasStation.lng))
-      .title(gasStation.name).snippet(String.valueOf(gasStation.rating)));
+  public Marker setGasMarker(GasStation gasStation, GoogleMap googleMap){
+
+    //resize custom marker
+    int height = 100;
+    int width = 100;
+    BitmapDrawable bitmapdraw=(BitmapDrawable)getResources().getDrawable(R.drawable.gas_station_color);
+    Bitmap b=bitmapdraw.getBitmap();
+    Bitmap smallMarker = Bitmap.createScaledBitmap(b, width, height, false);
+
+
+    Marker m = googleMap.addMarker(new MarkerOptions().position(new LatLng(gasStation.lat, gasStation.lng))
+            .title(gasStation.name)
+            .snippet(String.valueOf(gasStation.rating))
+            .icon(BitmapDescriptorFactory.fromBitmap(smallMarker)));
+    m.setTag(gasStation);
+    return m;
   }
+
 
   /********************* Draw Route **************************/
   public void drawRoute(List<LatLng> input) {
@@ -521,7 +542,7 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback,
     LatLngBounds bounds = boundBuilder.build();
     int width = getResources().getDisplayMetrics().widthPixels;
     int height = getResources().getDisplayMetrics().heightPixels;
-    int padding = 100;
+    int padding = 300;
     mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, width, height, padding));
   }
 
@@ -583,6 +604,7 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback,
     protected void onPostExecute(List<LatLng> latLngs) {
       // super.onPostExecute(latLngs);
       drawRoute(latLngs);
+      autoMoveCamera(latLngs); // Move camera to an appropriate view.
       Log.d("Success", "route drawn on map");
     }
   }

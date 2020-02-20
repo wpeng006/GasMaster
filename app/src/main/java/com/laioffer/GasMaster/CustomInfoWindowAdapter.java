@@ -30,9 +30,16 @@ class CustomInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
         View v =  inflater.inflate(R.layout.custom_info_contents, null);
         TextView brand = (TextView) v.findViewById(R.id.brand);
         TextView rating = (TextView) v.findViewById(R.id.rating);
-        Log.i("brand", marker.getTitle());
+        TextView openning = (TextView) v.findViewById(R.id.openning);
         brand.setText(marker.getTitle());
         rating.setText(marker.getSnippet());
+        GasStation gasStation = (GasStation) marker.getTag();
+        if (gasStation.isOpen) {
+            openning.setText("Openning");
+        } else {
+            openning.setText("Closed");
+        }
+
         return v;
 
     }
