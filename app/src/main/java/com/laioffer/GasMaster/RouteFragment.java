@@ -33,6 +33,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.android.gms.maps.model.RoundCap;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.maps.android.PolyUtil;
 import com.laioffer.GasMaster.ui.LocationTracker;
@@ -63,8 +64,10 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback,
   private MapView mapView;
   private View view;
 
-  private static final int COLOR_BLACK_ARGB = 0xff000000;
-  private static final int POLYLINE_STROKE_WIDTH_PX = 12;
+  private static final int LINE_FILL_COLOR = 0xffffbf00;
+  private static final int LINE_BORDER_COLOR = 0xfff05e23;
+  private static final int POLYLINE_STROKE_WIDTH_BORDER = 20;
+  private static final int POLYLINE_STROKE_WIDTH_FILL = 11;
   private List<LatLng> navRoute;
 
   private String source;
@@ -133,6 +136,7 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback,
     view = inflater.inflate(R.layout.fragment_route, container,
       false);
     return view;
+
 
     //return inflater.inflate(R.layout.fragment_route, container, false);
   }
@@ -259,14 +263,14 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback,
     });
   }
 
-  @Override
-  public void onCreateOptionsMenu(Menu menu,MenuInflater inflater) {
-    // Do something that differs the Activity's menu here
-    SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
-    searchView.setOnQueryTextListener(this);
-    super.onCreateOptionsMenu(menu, inflater);
-  }
-
+//  @Override
+//  public void onCreateOptionsMenu(Menu menu,MenuInflater inflater) {
+//    // Do something that differs the Activity's menu here
+//    SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+//    searchView.setOnQueryTextListener(this);
+//    super.onCreateOptionsMenu(menu, inflater);
+//  }
+//
   /**
    * Called when the user submits the query. This could be due to a key press on the
    * keyboard or due to pressing a submit button.
@@ -311,7 +315,7 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback,
   public boolean onQueryTextChange(String newText) {
     return false;
   }
-
+//
   private class DownloadTask extends AsyncTask<String, Void, String> {
 
     @Override
@@ -500,9 +504,20 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback,
     options.addAll(input);
     Polyline polyline = mMap.addPolyline(options);
     currentRoute = polyline;
-    polyline.setColor(COLOR_BLACK_ARGB);
-    polyline.setWidth(POLYLINE_STROKE_WIDTH_PX);
-    Log.d("Success", "drawRoute executed");
+
+    polyline.setColor(LINE_BORDER_COLOR);
+    polyline.setWidth(POLYLINE_STROKE_WIDTH_BORDER);
+    polyline.setEndCap(new RoundCap());
+
+    //
+    PolylineOptions options2 = new PolylineOptions().clickable(false);
+    options2.addAll(input);
+    Polyline polyline2 = mMap.addPolyline(options);
+
+    polyline2.setColor(LINE_FILL_COLOR);
+    polyline2.setWidth(POLYLINE_STROKE_WIDTH_FILL);
+
+    //Log.d("Success", "drawRoute executed");
   }
 
   public void setRoute(List<LatLng> points) {

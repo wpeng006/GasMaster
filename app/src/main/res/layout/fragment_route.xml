@@ -7,36 +7,35 @@
 
     <!-- TODO: Update blank fragment layout -->
 
-<!--    <androidx.appcompat.widget.Toolbar-->
-<!--        android:id="@+id/my_toolbar"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="?attr/actionBarSize"-->
-<!--        android:background="@color/black"-->
-<!--        android:elevation="4dp"-->
-<!--        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"-->
-<!--        android:popupTheme="@style/ThemeOverlay.AppCompat.Dark">-->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/jet"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:popupTheme="@style/ThemeOverlay.AppCompat.Dark">
 
-<!--        <LinearLayout-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:orientation="horizontal">-->
-<!--            <androidx.appcompat.widget.SearchView-->
-<!--                android:id="@+id/my_searchview"-->
-<!--                style="@style/SearchViewStyle"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="match_parent"-->
-<!--                android:layout_marginLeft="10dp"-->
-<!--                android:iconifiedByDefault="false"-->
-<!--                android:queryHint="@string/search_placeholder" />-->
-<!--            <TextView-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginLeft="70dp"-->
-<!--                android:textSize="20sp"-->
-<!--                android:text='Search Here'/>-->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/my_searchview"
+                style="@style/SearchViewStyle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:iconifiedByDefault="false"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="70dp"
+                android:textSize="20sp"
+                android:text='Search Here'/>
 
-<!--        </LinearLayout>-->
-<!--    </androidx.appcompat.widget.Toolbar>-->
+        </LinearLayout>
+    </androidx.appcompat.widget.Toolbar>
 
     <com.google.android.gms.maps.MapView
         android:id="@+id/event_map_view"
@@ -49,7 +48,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd = "true"
         android:layout_alignParentBottom = "true"
-        android:layout_margin="16dp"/>
+        android:layout_margin="16dp"
+        android:backgroundTint="@color/jet"
+        android:src="@drawable/ic_add_location"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab2"
@@ -60,7 +61,9 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="15dp"
-        android:layout_marginBottom="77dp"/>
+        android:layout_marginBottom="77dp"
+        android:backgroundTint="@color/jet"
+        android:src="@drawable/ic_drive"/>
 
 
 </RelativeLayout>

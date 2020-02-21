@@ -5,14 +5,14 @@
     android:layout_height="match_parent"
     tools:context=".PromotionFragment"
     >
-    <TextView
-        android:id='@+id/name'
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15sp"
-        android:layout_centerHorizontal="true"
-        android:fontFamily="sans-serif-light"
-        android:text='Promotion'
-        android:textColor="@color/textview"
-        android:textSize="32sp" />
+        <TextView
+            android:id='@+id/name'
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15sp"
+            android:layout_centerHorizontal="true"
+            android:fontFamily="sans-serif-light"
+            android:text='Promotion'
+            android:textColor="@color/textview"
+            android:textSize="32sp" />
 </FrameLayout>
