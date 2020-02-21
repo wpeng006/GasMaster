@@ -15,4 +15,5 @@
             android:text='Promotion'
             android:textColor="@color/textview"
             android:textSize="32sp" />
+
 </FrameLayout>
