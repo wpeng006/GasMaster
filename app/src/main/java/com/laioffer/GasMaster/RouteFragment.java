@@ -135,7 +135,7 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback,
 
     view = inflater.inflate(R.layout.fragment_route, container,
       false);
-    SearchView
+
     return view;
 
 
