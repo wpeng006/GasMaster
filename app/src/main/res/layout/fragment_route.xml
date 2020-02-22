@@ -50,7 +50,7 @@
         android:layout_alignParentBottom = "true"
         android:layout_margin="16dp"
         android:backgroundTint="@color/jet"
-        android:src="@drawable/ic_add_location"/>
+        android:src="@drawable/ic_drive"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab2"
@@ -63,7 +63,7 @@
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="77dp"
         android:backgroundTint="@color/jet"
-        android:src="@drawable/ic_drive"/>
+        android:src="@drawable/ic_add_location"/>
 
 
 </RelativeLayout>

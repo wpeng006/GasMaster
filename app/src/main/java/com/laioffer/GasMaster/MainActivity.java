@@ -23,8 +23,8 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
-//    Intent intent = new Intent(this, LoginActivity.class);
-//    startActivity(intent);
+    Intent intent = new Intent(this, LoginActivity.class);
+    startActivity(intent);
 
     bottomNavigation = findViewById(R.id.bottom_navigation);
     bottomNavigation.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
