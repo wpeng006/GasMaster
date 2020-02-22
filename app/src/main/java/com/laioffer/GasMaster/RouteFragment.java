@@ -75,7 +75,6 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback,
   private String source;
   private String dest = "UCLA";
   LatLng curPos; // Current position.
-  //String strUrl = UrlPart.getUrl(source, dest);
 
   private static final String ARG_PARAM1 = "param1";
   private static final String ARG_PARAM2 = "param2";
@@ -226,7 +225,13 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback,
 
       // Show new route.
       mMap.clear();
-      mMap.addMarker(new MarkerOptions().position(mPos).icon(BitmapDescriptorFactory.fromResource((R.drawable.station))));
+      int height = 100;
+      int width = 100;
+      BitmapDrawable bitmapDrawFrom = (BitmapDrawable)getResources().getDrawable(R.drawable.pin);
+      Bitmap b = bitmapDrawFrom.getBitmap();
+      Bitmap bMarker = Bitmap.createScaledBitmap(b, width, height, false);
+      mMap.addMarker(new MarkerOptions().position(mPos)
+              .icon(BitmapDescriptorFactory.fromBitmap(bMarker)));
       setRoute(newRoute);
   }
 
@@ -243,10 +248,7 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback,
   public void onMapReady(GoogleMap googleMap) {
 
     mMap = googleMap;
-    Log.e("Task", "mMap created.");
-
     mMap.setOnMarkerClickListener(this);
-    Log.e("Task", "Listen on marker.");
 
     CustomInfoWindowAdapter markerInfoWindowAdapter = new CustomInfoWindowAdapter(getActivity().getApplicationContext());
     mMap.setInfoWindowAdapter(markerInfoWindowAdapter);
@@ -358,14 +360,14 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback,
     }
     DownloadTask downloadTask = new DownloadTask();
 
-    Log.e("Background Task", "Start to download route.");
+    Log.i("Background Task", "Start to download route.");
     downloadTask.execute(UrlPart.getUrl2(curPos, dest));
-    Log.e("Direction Url", UrlPart.getUrl2(curPos, dest));
-    Log.e("Direction Url", Utils.getDirectionUrl(curPos, Utils.replaceSpaceWithPlus(dest)));
+    Log.i("Direction Url", UrlPart.getUrl2(curPos, dest));
+    Log.i("Direction Url", Utils.getDirectionUrl(curPos, Utils.replaceSpaceWithPlus(dest)));
 
     // Click a marker and then show nearby stations or draw new route.
     mMap.setOnMarkerClickListener(this);
-    Log.e("Task", "Listen on marker.");
+    Log.i("Task", "Listen on marker.");
     return true;
   }
 
@@ -447,7 +449,6 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback,
       // Show nearby gas stations in 1km.
       try {
           getGasStation(mMap, curPos, 10000);
-          Log.e("Task", "Show nearby stations.");
       } catch (IOException e) {
           e.printStackTrace();
       }
@@ -481,8 +482,6 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback,
     urlBuilder.addQueryParameter("lng", String.valueOf(point.longitude));
     urlBuilder.addQueryParameter("radius", String.valueOf(radius));
     String url = urlBuilder.build().toString();
-    Log.i("url", url);
-
     Request request = new Request.Builder()
       .url(url)
       .build();
@@ -492,7 +491,6 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback,
       final List<GasStation> list = new LinkedList<>();
       @Override
       public void onFailure(Call call, IOException e) {
-        Log.i("onFailure", "fail");
         call.cancel();
         e.printStackTrace();
       }
@@ -522,7 +520,6 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback,
                   list.add(gasStation);
                   Marker m = setGasMarker(gasStation, googleMap);
                   gasList.add(m.getPosition());
-                  Log.i(Integer.toString(i), gasStation.name);
                 } catch (JSONException e) {
                   e.printStackTrace();
                 }
@@ -586,17 +583,19 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback,
     BitmapDrawable bitmapDrawFrom = (BitmapDrawable)getResources().getDrawable(R.drawable.boy);
     Bitmap bFrom = bitmapDrawFrom.getBitmap();
     Bitmap bMarkerFrom = Bitmap.createScaledBitmap(bFrom, width, height, false);
-
-    BitmapDrawable bitmapDrawTo = (BitmapDrawable)getResources().getDrawable(R.drawable.ic_to);
-    Bitmap bTo = bitmapDrawTo.getBitmap();
-    Bitmap bMarkerTo = Bitmap.createScaledBitmap(bTo, width, height, false);
-
-
-    Marker markerFrom = mMap.addMarker(new MarkerOptions().position(input.get(0))
+    mMap.addMarker(new MarkerOptions().position(input.get(0))
             .anchor(0.5f, 0.5f)
             .icon(BitmapDescriptorFactory.fromBitmap(bMarkerFrom)));
-    Marker markerTo = mMap.addMarker(new MarkerOptions().position(input.get(input.size() - 1))
-            .icon(BitmapDescriptorFactory.fromBitmap(bMarkerTo)));
+
+
+    if (destPoint != null) {
+      BitmapDrawable bitmapDrawTo = (BitmapDrawable)getResources().getDrawable(R.drawable.ic_to);
+      Bitmap bTo = bitmapDrawTo.getBitmap();
+      Bitmap bMarkerTo = Bitmap.createScaledBitmap(bTo, width, height, false);
+      mMap.addMarker(new MarkerOptions().position(input.get(input.size() - 1))
+              .icon(BitmapDescriptorFactory.fromBitmap(bMarkerTo)));
+    }
+
 
   }
 

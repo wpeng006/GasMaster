@@ -1,6 +1,7 @@
 package com.laioffer.GasMaster;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,14 +31,15 @@ class CustomInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
         View v =  inflater.inflate(R.layout.custom_info_contents, null);
         TextView brand = (TextView) v.findViewById(R.id.brand);
         TextView rating = (TextView) v.findViewById(R.id.rating);
-        TextView openning = (TextView) v.findViewById(R.id.openning);
+        TextView opening = (TextView) v.findViewById(R.id.opening);
         brand.setText(marker.getTitle());
+        brand.setTypeface(null, Typeface.BOLD);
         rating.setText(marker.getSnippet());
         GasStation gasStation = (GasStation) marker.getTag();
         if (gasStation.isOpen) {
-            openning.setText("Openning");
+            opening.setText("Opening");
         } else {
-            openning.setText("Closed");
+            opening.setText("Closed");
         }
 
         return v;

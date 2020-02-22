@@ -40,10 +40,11 @@
         android:gravity="center_vertical">
 
         <ImageView
-            android:layout_width="25dip"
-            android:layout_height="25dip"
+            android:layout_width="20dip"
+            android:layout_height="20dip"
             android:layout_marginLeft="5dip"
-            android:background="@drawable/ic_rating"/>
+            android:layout_marginRight="5dip"
+            android:background="@drawable/ic_star"/>
 
         <TextView
             android:id="@+id/rating"
@@ -60,13 +61,14 @@
         android:gravity="center_vertical">
 
         <ImageView
-            android:layout_width="25dip"
-            android:layout_height="25dip"
+            android:layout_width="20dip"
+            android:layout_height="20dip"
             android:layout_marginLeft="5dip"
-            android:background="@drawable/ic_rating"/>
+            android:layout_marginRight="5dip"
+            android:background="@drawable/ic_hour"/>
 
         <TextView
-            android:id="@+id/openning"
+            android:id="@+id/opening"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
