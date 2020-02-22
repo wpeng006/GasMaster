@@ -4,21 +4,19 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
-import android.nfc.Tag;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+
 import android.view.View;
 import android.view.ViewGroup;
-
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
@@ -142,7 +140,6 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback,
 
     view = inflater.inflate(R.layout.fragment_route, container,
       false);
-
     return view;
 
 
@@ -554,8 +551,6 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback,
     BitmapDrawable bitmapdraw=(BitmapDrawable)getResources().getDrawable(R.drawable.gas_station_color);
     Bitmap b=bitmapdraw.getBitmap();
     Bitmap smallMarker = Bitmap.createScaledBitmap(b, width, height, false);
-
-
     Marker m = googleMap.addMarker(new MarkerOptions().position(new LatLng(gasStation.lat, gasStation.lng))
             .title(gasStation.name)
             .snippet(String.valueOf(gasStation.rating))
@@ -585,7 +580,24 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback,
     polyline2.setColor(LINE_FILL_COLOR);
     polyline2.setWidth(POLYLINE_STROKE_WIDTH_FILL);
 
-    //Log.d("Success", "drawRoute executed");
+    //resize custom marker
+    int height = 100;
+    int width = 100;
+    BitmapDrawable bitmapDrawFrom = (BitmapDrawable)getResources().getDrawable(R.drawable.boy);
+    Bitmap bFrom = bitmapDrawFrom.getBitmap();
+    Bitmap bMarkerFrom = Bitmap.createScaledBitmap(bFrom, width, height, false);
+
+    BitmapDrawable bitmapDrawTo = (BitmapDrawable)getResources().getDrawable(R.drawable.ic_to);
+    Bitmap bTo = bitmapDrawTo.getBitmap();
+    Bitmap bMarkerTo = Bitmap.createScaledBitmap(bTo, width, height, false);
+
+
+    Marker markerFrom = mMap.addMarker(new MarkerOptions().position(input.get(0))
+            .anchor(0.5f, 0.5f)
+            .icon(BitmapDescriptorFactory.fromBitmap(bMarkerFrom)));
+    Marker markerTo = mMap.addMarker(new MarkerOptions().position(input.get(input.size() - 1))
+            .icon(BitmapDescriptorFactory.fromBitmap(bMarkerTo)));
+
   }
 
   public void setRoute(List<LatLng> points) {
