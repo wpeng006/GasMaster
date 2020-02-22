@@ -51,4 +51,7 @@ dependencies {
     // Route Fragment Library
     implementation 'com.google.maps.android:android-maps-utils:0.5'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+
+    // Extended Floating action button library
+    implementation 'com.robertlevonyan.view:CustomFloatingActionButton:3.0.0'
 }

@@ -1,11 +1,18 @@
 package com.laioffer.GasMaster;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
@@ -17,8 +24,9 @@ import com.laioffer.GasMaster.UserFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.laioffer.GasMaster.R;
 
-public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
+public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener, SearchView.OnFocusChangeListener {
   BottomNavigationView bottomNavigation;
+  SearchView searchView;
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -28,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
     bottomNavigation = findViewById(R.id.bottom_navigation);
     bottomNavigation.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
+    bottomNavigation.setFocusableInTouchMode(true);
     openFragment(RouteFragment.newInstance("", ""));
   }
   public void openFragment(Fragment fragment) {
@@ -60,8 +69,9 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
   public boolean onCreateOptionsMenu(Menu menu) {
     MenuInflater inflater = getMenuInflater();
     inflater.inflate(R.menu.action_bar_menu, menu);
-    SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
-
+    searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+    searchView.setIconifiedByDefault(true);
+    searchView.setOnFocusChangeListener(this);
     searchView.setOnQueryTextListener(this);
     return super.onCreateOptionsMenu(menu);
   }
@@ -93,6 +103,14 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
   @Override
   public boolean onQueryTextChange(String newText) {
     return false;
+  }
+
+  @Override
+  public void onFocusChange(View view, boolean hasFocus) {
+    if (!hasFocus) {
+      InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+      inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
   }
 
 }

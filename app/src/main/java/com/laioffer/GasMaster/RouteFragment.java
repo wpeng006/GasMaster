@@ -35,9 +35,9 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.maps.model.RoundCap;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.maps.android.PolyUtil;
 import com.laioffer.GasMaster.ui.LocationTracker;
+import com.robertlevonyan.views.customfloatingactionbutton.FloatingActionButton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -66,9 +66,9 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback,
   private MapView mapView;
   private View view;
 
-  private static final int LINE_FILL_COLOR = 0xffffbf00;
-  private static final int LINE_BORDER_COLOR = 0xfff05e23;
-  private static final int POLYLINE_STROKE_WIDTH_BORDER = 20;
+  private static final int LINE_FILL_COLOR = 0x50f65026;
+  private static final int LINE_BORDER_COLOR = 0x50f65026;
+  private static final int POLYLINE_STROKE_WIDTH_BORDER = 15;
   private static final int POLYLINE_STROKE_WIDTH_FILL = 11;
   private List<LatLng> navRoute;
 
@@ -271,7 +271,7 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback,
 
 
     // Jump to Google Map to navigate.
-    FloatingActionButton fab = view.findViewById(R.id.fab);
+    com.robertlevonyan.views.customfloatingactionbutton.FloatingActionButton fab = view.findViewById(R.id.fab);
 
     fab.setOnClickListener(new View.OnClickListener() {
       @Override
@@ -368,7 +368,7 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback,
     // Click a marker and then show nearby stations or draw new route.
     mMap.setOnMarkerClickListener(this);
     Log.i("Task", "Listen on marker.");
-    return true;
+    return false;
   }
 
   /**

@@ -8,4 +8,7 @@
     <string name="nav_gas">Find Gas</string>
     <string name="nav_user">My Profile</string>
     <string name="search_title">Where to go</string>
+    <string name="navigation"> Start </string>
+    <string name="add_stop">Add</string>
+
 </resources>
