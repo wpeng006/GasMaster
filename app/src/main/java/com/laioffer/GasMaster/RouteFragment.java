@@ -1,5 +1,7 @@
 package com.laioffer.GasMaster;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -12,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -54,6 +57,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
+import static androidx.appcompat.widget.SearchView.*;
 import static com.laioffer.GasMaster.Utility.DEFAULT_KEYWORD;
 import static com.laioffer.GasMaster.Utility.DEFAULT_RADIUS;
 import static com.laioffer.GasMaster.Utility.LONG_DIS;
@@ -99,6 +103,9 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback,
   // Polyline of drawing route
   private Polyline currentRoute;
 
+//  private SearchView searchView = null;
+//  private SearchView.OnQueryTextListener queryTextListener;
+
   // TAG
   private static final String TAG = "Route Fragment";
 
@@ -135,12 +142,13 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback,
 
     view = inflater.inflate(R.layout.fragment_route, container,
       false);
-    SearchView
+
     return view;
 
 
     //return inflater.inflate(R.layout.fragment_route, container, false);
   }
+
 
   @Override
   public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -151,6 +159,19 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback,
       mapView.onResume();// needed to get the map to display immediately
       mapView.getMapAsync(this);
     }
+
+//    SearchView mSearchView = (SearchView) view.findViewById(R.id.search);
+//    mSearchView.setOnQueryTextListener(new OnQueryTextListener() {
+//      @Override
+//      public boolean onQueryTextSubmit(String query) {
+//        return submitQuery(query);
+//      }
+//
+//      @Override
+//      public boolean onQueryTextChange(String newText) {
+//        return false;
+//      }
+//    });
   }
 
   @Override
@@ -264,14 +285,60 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback,
     });
   }
 
+  @Override
+  public void onCreateOptionsMenu(Menu menu,MenuInflater inflater) {
+    // Do something that differs the Activity's menu here
+    SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+    searchView.setOnQueryTextListener(this);
+    super.onCreateOptionsMenu(menu, inflater);
+  }
+
+
 //  @Override
-//  public void onCreateOptionsMenu(Menu menu,MenuInflater inflater) {
-//    // Do something that differs the Activity's menu here
-//    SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
-//    searchView.setOnQueryTextListener(this);
+//  public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+//    //inflater.inflate(R.menu., menu);
+//    MenuItem searchItem = menu.findItem(R.id.search);
+//    SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
+//
+//    if (searchItem != null) {
+//      searchView = (SearchView) searchItem.getActionView();
+//    }
+//    if (searchView != null) {
+//      searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
+//
+//      queryTextListener = new SearchView.OnQueryTextListener() {
+//        @Override
+//        public boolean onQueryTextChange(String newText) {
+//          Log.i("onQueryTextChange", newText);
+//
+//          return true;
+//        }
+//        @Override
+//        public boolean onQueryTextSubmit(String query) {
+//          Log.i("onQueryTextSubmit", query);
+//
+//          return true;
+//        }
+//      };
+//      searchView.setOnQueryTextListener(queryTextListener);
+//    }
 //    super.onCreateOptionsMenu(menu, inflater);
 //  }
 //
+//  @Override
+//  public boolean onOptionsItemSelected(MenuItem item) {
+//    switch (item.getItemId()) {
+//      case R.id.search:
+//        // Not implemented here
+//        return false;
+//      default:
+//        break;
+//    }
+//    searchView.setOnQueryTextListener(queryTextListener);
+//    return super.onOptionsItemSelected(item);
+//  }
+
+
   /**
    * Called when the user submits the query. This could be due to a key press on the
    * keyboard or due to pressing a submit button.
