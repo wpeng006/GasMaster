@@ -13,14 +13,24 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.laioffer.GasMaster.Config.Config;
+import com.laioffer.GasMaster.Model.User;
+import com.laioffer.GasMaster.Network.BackEndConnection;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class SignupActivity extends AppCompatActivity {
     private static final String TAG = "SignupActivity";
+    // hold on to a GasMaster connection
+    private BackEndConnection backEndConnection;
 
     @BindView(R.id.input_firstName) EditText _firstNameText;
     @BindView(R.id.input_lastName) EditText _lastNameText;
+
     @BindView(R.id.input_car) EditText _carText;
     @BindView(R.id.input_email) EditText _emailText;
     @BindView(R.id.input_mobile) EditText _mobileText;
@@ -51,6 +61,9 @@ public class SignupActivity extends AppCompatActivity {
                 overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
             }
         });
+
+        // initialize backendConnection
+        backEndConnection = BackEndConnection.getInstance();
     }
 
     private void signup() {
@@ -78,20 +91,52 @@ public class SignupActivity extends AppCompatActivity {
         String reEnterPassword = _reEnterPasswordText.getText().toString();
 
         // Todo: Signup logic Implementation
+        User user = new User.UserBuilder()
+          .email(email)
+          .firstName(firstName)
+          .lastName(lastName)
+          .phone(mobile)
+          .password(password)
+          .carModel(car)
+          .build();
+
+        Call<User> loginCall = backEndConnection.createService().register(user);
+        loginCall.enqueue(new Callback<User>() {
+
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                Log.e(TAG, "Register Response" + response.body());
+                if (response.isSuccessful() && response.body().getStatus().equals("OK")) {
+                    onSignupSuccess();
+                } else {
+                    Log.e(TAG, "Register Failed" + response.body().getStatus());
+                    Toast.makeText(getBaseContext(), "Register Failed" + " "+ response.body().getStatus(), Toast.LENGTH_LONG).show();
+                    onSignupFailed();
+                }
+                progressDialog.dismiss();
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                Log.e(TAG, "Register Failure: unable to get response" + t.getLocalizedMessage());
+                onSignupFailed();
+                progressDialog.dismiss();
+            }
+        });
 
         //////////////////////////////////////what does it do
-        new android.os.Handler().postDelayed(
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        // On complete call either onSignupSuccess or onSignupFailed
-                        // depending on success
-                        onSignupSuccess();
-                        // onSignupFailed();
-                        progressDialog.dismiss();
-                    }
-                }, 3000
-        );
+//        new android.os.Handler().postDelayed(
+//                new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        // On complete call either onSignupSuccess or onSignupFailed
+//                        // depending on success
+//                        onSignupSuccess();
+//                        // onSignupFailed();
+//                        progressDialog.dismiss();
+//                    }
+//                }, 3000
+//        );
 
     }
 
@@ -104,7 +149,7 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     private void onSignupFailed() {
-        Toast.makeText(getBaseContext(), "Login Failed!", Toast.LENGTH_LONG).show();
+        Toast.makeText(getBaseContext(), "Sign up Failed!", Toast.LENGTH_LONG).show();
         _signupButton.setEnabled(true);
     }
 

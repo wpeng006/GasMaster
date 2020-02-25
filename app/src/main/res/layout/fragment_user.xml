@@ -36,24 +36,23 @@
         </RelativeLayout>
 
         <TextView
-            android:id='@+id/name'
+            android:id='@+id/user_name'
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/imageUser"
             android:layout_marginTop="15sp"
             android:layout_centerHorizontal="true"
             android:fontFamily="sans-serif-light"
-            android:text='Name:Maxwell'
             android:textColor="@color/textview"
             android:textSize="30sp" />
         <TextView
+            android:id='@+id/user_email'
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/name"
+            android:layout_below="@+id/user_name"
             android:layout_marginBottom="5dp"
             android:layout_centerHorizontal="true"
             android:fontFamily="sans-serif-light"
-            android:text="Email: Gas@gmail.com"
             android:textColor="@color/textview"
             android:textSize="18sp" />
 
@@ -80,10 +79,10 @@
                 android:gravity="center_horizontal"
                 android:orientation="vertical">
                 <TextView
+                    android:id='@+id/user_trip'
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily='sans-serif-light'
-                    android:text="97"
                     android:textColor="@color/textview2"
                     android:textSize="25sp">
 
@@ -116,10 +115,10 @@
                 android:gravity="center_horizontal"
                 android:orientation="vertical">
                 <TextView
+                    android:id='@+id/user_promotion'
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily='sans-serif-light'
-                    android:text="9"
                     android:textColor="@color/textview2"
                     android:textSize="25sp">
                 </TextView>
@@ -135,11 +134,24 @@
             </LinearLayout>
         </RelativeLayout>
     </LinearLayout>
+
+
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/upper">
-        <TextView
+
+        <Button
+            android:id="@+id/btn_logout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_marginTop="100dp"
+            android:layout_marginBottom="20dp"
+            android:text="logout"
+            android:textSize="20dp"/>
+      <TextView
             android:id="@+id/locationtext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -150,6 +162,7 @@
             android:gravity="center_horizontal">
 
         </TextView>
+
 
     </RelativeLayout>
 

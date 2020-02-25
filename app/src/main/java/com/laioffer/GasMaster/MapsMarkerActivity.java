@@ -9,6 +9,8 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -146,7 +148,10 @@ public class MapsMarkerActivity extends AppCompatActivity
     }
 
     public void setMarker(GasStation gasStation, GoogleMap googleMap){
-        googleMap.addMarker(new MarkerOptions().position(new LatLng(gasStation.lat, gasStation.lng))
-                .title(gasStation.name).snippet(String.valueOf(gasStation.rating)));
+        googleMap.addMarker(new MarkerOptions()
+                .position(new LatLng(gasStation.lat, gasStation.lng))
+                .title(gasStation.name)
+                .snippet(String.valueOf(gasStation.rating))
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.gas_station)));
     }
 }

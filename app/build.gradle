@@ -38,7 +38,20 @@ dependencies {
     implementation 'com.jakewharton:butterknife:10.2.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.1'
 
+    // location
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
+    implementation 'com.google.android.gms:play-services-location:16.0.0'
     implementation "com.squareup.okhttp3:okhttp:4.3.1"
 
+
+    // Network Library
+    implementation 'com.squareup.retrofit2:retrofit:2.0.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.0.0'
+
+    // Route Fragment Library
+    implementation 'com.google.maps.android:android-maps-utils:0.5'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+
+    // Extended Floating action button library
+    implementation 'com.robertlevonyan.view:CustomFloatingActionButton:3.0.0'
 }

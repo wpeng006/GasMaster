@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".RouteFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+<!--    <androidx.appcompat.widget.Toolbar-->
+<!--        android:id="@+id/my_toolbar"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="?attr/actionBarSize"-->
+<!--        android:background="@color/jet"-->
+<!--        android:elevation="4dp"-->
+<!--        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"-->
+<!--        android:popupTheme="@style/ThemeOverlay.AppCompat.Dark">-->
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="horizontal">-->
+<!--            <androidx.appcompat.widget.SearchView-->
+<!--                android:id="@+id/my_searchview"-->
+<!--                style="@style/SearchViewStyle"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:layout_marginLeft="10dp"-->
+<!--                android:iconifiedByDefault="false"/>-->
+<!--&lt;!&ndash;            <TextView&ndash;&gt;-->
+<!--&lt;!&ndash;                android:layout_width="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:layout_marginLeft="70dp"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:textSize="20sp"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:text='Search Here'/>&ndash;&gt;-->
+
+<!--        </LinearLayout>-->
+<!--    </androidx.appcompat.widget.Toolbar>-->
+
+    <com.google.android.gms.maps.MapView
+        android:id="@+id/event_map_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+        <com.robertlevonyan.views.customfloatingactionbutton.FloatingActionButton
+            android:id="@+id/fab2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="0dp"
+            android:text="@string/add_stop"
+            android:backgroundTint="@color/oil"
+            android:textColor="@color/white"
+            app:fabIcon="@drawable/ic_add_location"
+            />
+
+        <com.robertlevonyan.views.customfloatingactionbutton.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:text="@string/navigation"
+            android:backgroundTint="@color/oil"
+            android:textColor="@color/white"
+            app:fabIcon="@drawable/ic_drive"
+            />
+    </LinearLayout>
+<!--    <com.robertlevonyan.views.customfloatingactionbutton.FloatingActionButton-->
+<!--        android:id="@+id/fab2"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_alignParentStart="true"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:layout_marginStart="16dp"-->
+<!--        android:layout_margin="16dp"-->
+<!--        android:text="@string/add_stop"-->
+<!--        android:backgroundTint="@color/jet"-->
+<!--        android:textColor="@color/white"-->
+<!--        app:fabIcon="@drawable/ic_add_location"-->
+<!--        />-->
+
+<!--    <com.robertlevonyan.views.customfloatingactionbutton.FloatingActionButton-->
+<!--        android:id="@+id/fab"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_alignParentEnd = "true"-->
+<!--        android:layout_alignParentBottom = "true"-->
+<!--        android:layout_margin="16dp"-->
+<!--        android:text="@string/navigation"-->
+<!--        android:backgroundTint="@color/jet"-->
+<!--        android:textColor="@color/white"-->
+<!--        app:fabIcon="@drawable/ic_drive"-->
+<!--        />-->
+
+
+
+</RelativeLayout>

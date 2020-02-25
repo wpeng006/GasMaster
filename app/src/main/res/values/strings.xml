@@ -4,7 +4,11 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="title_activity_maps">Map with Marker</string>
-    <string name="nav_promotion">nav_promotion</string>
-    <string name="nav_gas">nav_gas</string>
-    <string name="nav_user">nav_user</string>
+    <string name="nav_promotion">Promotion</string>
+    <string name="nav_gas">Find Gas</string>
+    <string name="nav_user">My Profile</string>
+    <string name="search_title">Where to go</string>
+    <string name="navigation"> Start </string>
+    <string name="add_stop">Add</string>
+
 </resources>

@@ -6,8 +6,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+
+import com.laioffer.GasMaster.Config.Config;
+import com.laioffer.GasMaster.Model.User;
+
 
 import butterknife.BindView;
 
@@ -20,7 +25,18 @@ public class UserFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+//    private User usr = new User.UserBuilder()
+//      .email("unknown@gmail.com")
+//      .firstName("Joseph")
+//      .fullName("Joestar")
+//      .build();
+// Todo: connect usr to global variable currentUser
+    private User usr = Config.currentUser;
+
+
+
     @BindView(R.id.btn_logout) Button _logoutButton;
+
 
     public UserFragment() {
 
@@ -50,6 +66,19 @@ public class UserFragment extends Fragment {
 
         View view =  inflater.inflate(R.layout.fragment_user, container, false);
 
+        // Todo: Demo how to access usr object and set name
+
+        TextView name = (TextView) view.findViewById(R.id.user_name);
+        TextView email = (TextView) view.findViewById(R.id.user_email);
+        TextView trips = (TextView) view.findViewById(R.id.user_trip);
+        TextView promotion = (TextView) view.findViewById(R.id.user_promotion);
+
+        name.setText(usr.getName());
+        email.setText(usr.getEmail());
+        trips.setText(usr.getTrip());
+        promotion.setText(usr.getPromotion());
+        // Todo: End of demo
+
         Button btnLogout = view.findViewById(R.id.btn_logout);
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,5 +93,8 @@ public class UserFragment extends Fragment {
         });
 
         return view;
+
+ //       return inflater.inflate(R.layout.fragment_user, container, false);
+
     }
 }
