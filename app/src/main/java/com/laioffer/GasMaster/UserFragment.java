@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import com.laioffer.GasMaster.Config.Config;
 import com.laioffer.GasMaster.Model.User;
 
+
 import butterknife.BindView;
 
 public class UserFragment extends Fragment {
@@ -23,6 +24,7 @@ public class UserFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
 //    private User usr = new User.UserBuilder()
 //      .email("unknown@gmail.com")
 //      .firstName("Joseph")
@@ -33,8 +35,8 @@ public class UserFragment extends Fragment {
 
 
 
-    @BindView(R.id.btn_logout)
-    Button _logoutButton;
+    @BindView(R.id.btn_logout) Button _logoutButton;
+
 
     public UserFragment() {
 
@@ -55,12 +57,15 @@ public class UserFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View view =  inflater.inflate(R.layout.fragment_user, container, false);
+
         // Todo: Demo how to access usr object and set name
 
         TextView name = (TextView) view.findViewById(R.id.user_name);
@@ -73,6 +78,7 @@ public class UserFragment extends Fragment {
         trips.setText(usr.getTrip());
         promotion.setText(usr.getPromotion());
         // Todo: End of demo
+
         Button btnLogout = view.findViewById(R.id.btn_logout);
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,5 +95,6 @@ public class UserFragment extends Fragment {
         return view;
 
  //       return inflater.inflate(R.layout.fragment_user, container, false);
+
     }
 }

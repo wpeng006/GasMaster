@@ -78,14 +78,14 @@ public class MySQLConnection implements DBConnection {
 
 	@Override
 	public boolean registerUser(String userId, String password, String firstname, String lastname
-			, String phone_number, String email, String car_model) {
+			, String phone_number, String email, String car_model, String trip_completed, String promotion) {
 		if (conn == null) {
 			System.err.println("DB connection failed");
 			return false;
 		}
 
 		try {
-			String sql = "INSERT IGNORE INTO users VALUES (?, ?, ?, ?, ?, ?, ?)";
+			String sql = "INSERT IGNORE INTO users VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, userId);
 			ps.setString(2, password);
@@ -94,6 +94,8 @@ public class MySQLConnection implements DBConnection {
 			ps.setString(5, phone_number);
 			ps.setString(6, email);
 			ps.setString(7, car_model);
+			ps.setString(8, trip_completed);
+			ps.setString(9, promotion);
 			
 			return ps.executeUpdate() == 1;
 		} catch (Exception e) {

@@ -15,7 +15,7 @@ public class MySQLTableCreation {
 			
 			if (conn == null) {
 				return;
-			}
+			}	
 			
 			Statement statement = conn.createStatement();
 			String sql = "DROP TABLE IF EXISTS users";
@@ -29,6 +29,8 @@ public class MySQLTableCreation {
 					+ "phone_number VARCHAR(255),"
 					+ "email VARCHAR(255),"
 					+ "car_model VARCHAR(255),"
+					+ "trip_completed VARCHAR(255),"
+					+ "promotion VARCHAR(255),"
 					+ "PRIMARY KEY (user_id)"
 					+ ")";
 			statement.executeUpdate(sql);

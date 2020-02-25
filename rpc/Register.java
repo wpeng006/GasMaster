@@ -49,9 +49,11 @@ public class Register extends HttpServlet {
 			String phone_number = input.getString("phone_number");
 			String email = input.getString("email");
 			String car_model = input.getString("car_model");
+			String trip_completed = input.getString("trip_completed");
+			String promotion = input.getString("promotion");
 			
 			JSONObject obj = new JSONObject();
-			if (connection.registerUser(userId, password, firstname, lastname, phone_number, email, car_model))
+			if (connection.registerUser(userId, password, firstname, lastname, phone_number, email, car_model, trip_completed, promotion))
 				obj.put("status", "OK");
 			else obj.put("status", "User Already Exists");
 			RpcHelper.writeJsonObject(response, obj);
